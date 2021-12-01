@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Activities;
 using Domain;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -11,24 +13,36 @@ namespace API.Controllers
 {
     public class ActivitiesController : BaseApiController
     {
-        private readonly DataContext _context;
-
-        public ActivitiesController(DataContext context)
-        {
-            this._context = context;
-        }
-
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> GetActivities() 
         {
-            
-            return await _context.Activities.ToListAsync();
+            if (Mediator == null) throw new NullReferenceException(nameof(Mediator));
+            return await Mediator.Send(new List.Query());
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity>> GetActivity(Guid id) 
         {
-            // return new activity if null until error handler added
-            return await _context.Activities.FindAsync(id) ?? new Activity();    
+            if (Mediator == null) throw new NullReferenceException(nameof(Mediator));
+            return await Mediator.Send(new Details.Query {Id = id});   
+        }
+        [HttpPost]
+        public async Task<ActionResult> CreateActivity(Activity activity)
+        {
+            if (Mediator == null) throw new NullReferenceException(nameof(Mediator));
+            return Ok(await Mediator.Send(new Create.Command{Activity = activity}));
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult> EditActivity(Guid id, Activity activity)
+        {
+            activity.Id = id;
+            if (Mediator == null) throw new NullReferenceException(nameof(Mediator));
+            return Ok(await Mediator.Send(new Edit.Command {Activity = activity}));
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteActivity(Guid id)
+        {
+            if (Mediator == null) throw new NullReferenceException(nameof(Mediator));
+            return Ok(await Mediator.Send(new Delete.Command {iD = id}));
         }
     }
 }
