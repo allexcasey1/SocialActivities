@@ -17,7 +17,7 @@ export default function ActivitySelected({ selectedActivity, cancelSelectActivit
                 }
                 subheader={
                     <Typography variant="subtitle1">
-                        {returnDate(selectedActivity.date).toDateString()}
+                        {selectedActivity.date}
                     </Typography>
                 }
                 
@@ -50,8 +50,4 @@ export default function ActivitySelected({ selectedActivity, cancelSelectActivit
         </Card>
     )
             
-}
-
-function returnDate(date: Date): any {
-    return new Date(date);
 }

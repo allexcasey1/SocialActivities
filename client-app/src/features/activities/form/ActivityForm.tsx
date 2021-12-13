@@ -1,29 +1,30 @@
 import { Activity } from "../../../app/models/activity";
 import { Box, Button, FormControl, FormHelperText, Input, InputLabel, Paper } from '@mui/material/';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { ChangeEvent, useState } from "react";
 
 interface Props {
     activity: Activity | undefined;
     closeForm: () => void;
     createOrEditActivity: (activity: Activity) => void;
+    submitting: boolean;
 }
 
   
-export default function ActivityForm({activity: selectedActivity, closeForm, createOrEditActivity}: Props) {
+export default function ActivityForm({activity: selectedActivity, closeForm, createOrEditActivity, submitting}: Props) {
     const initialState = selectedActivity ?? 
     {
         id: '',
         title: '',
         category: '',
         description: '',
-        date: new Date(),
+        date: '1993-03-03',
         city: '', 
         venue: ''
     }
     const [activity, setActivity] = useState(initialState);
 
     function handleSubmit() {
-        console.log(activity);
         createOrEditActivity(activity)
     }
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -67,7 +68,7 @@ export default function ActivityForm({activity: selectedActivity, closeForm, cre
                     value={activity.date}
                     name="date"
                     onChange={handleInputChange}
-                    type="datetime" />
+                    type="date" />
                 <FormHelperText id="title-helper-date">You got this.</FormHelperText>
             </FormControl>
             {/* Description */}
@@ -118,9 +119,9 @@ export default function ActivityForm({activity: selectedActivity, closeForm, cre
                 <FormHelperText id="category-helper-text">Is eating 20 tacos a sport?</FormHelperText>
             </FormControl>
 
-            <Button variant="contained" sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} onClick={handleSubmit}>
+            <LoadingButton loading={submitting} variant="contained" onClick={handleSubmit} sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} >
                 Submit
-            </Button>
+            </LoadingButton>
             <Button variant="contained" sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} onClick={closeForm}>
                 Cancel
             </Button>

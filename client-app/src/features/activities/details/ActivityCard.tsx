@@ -1,16 +1,23 @@
+import React, { SyntheticEvent, useState } from 'react';
+import { LoadingButton } from '@mui/lab';
 import { Box, Button, Card, CardContent, CardHeader, Typography } from '@mui/material';
 import { Activity } from '../../../app/models/activity';
 
 interface Props {
     activity: Activity;
+    submitting: boolean;
     selectActivity: (id: string) => void;
-    deleteActivity: (activity: Activity) => void;
+    deleteActivity: (id: string) => void;
 }
 
-export default function ActivityCard({activity, selectActivity, deleteActivity}: Props) {
-    function returnDate(date: Date): any {
-        return new Date(date);
+export default function ActivityCard({activity, selectActivity, deleteActivity, submitting}: Props) {
+    const [target, setTarget] = useState('');
+
+    function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
+        setTarget(e.currentTarget.name);
+        deleteActivity(id);
     }
+
     return (
         <Card key={activity.id} sx={{borderRadius: '0'}}>
             <CardHeader
@@ -21,7 +28,7 @@ export default function ActivityCard({activity, selectActivity, deleteActivity}:
                 }
                 subheader={
                     <Typography variant="subtitle1">
-                        {returnDate(activity.date).toDateString()}
+                        {activity.date}
                     </Typography>
                 }
             />
@@ -47,9 +54,15 @@ export default function ActivityCard({activity, selectActivity, deleteActivity}:
                         >
                             {activity.category}
                         </Typography>
-                            <Button variant="contained" sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} onClick={ () => deleteActivity(activity) }>
+                            <LoadingButton 
+                                name={activity.id} 
+                                loading={submitting && target === activity.id} 
+                                variant="contained" 
+                                sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} 
+                                onClick={ (e) => handleActivityDelete(e, activity.id) }
+                            >
                                 Delete
-                            </Button>
+                            </LoadingButton>
                             <Button variant="contained" sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} onClick={ () => selectActivity(activity.id) }>
                                 View
                             </Button>
