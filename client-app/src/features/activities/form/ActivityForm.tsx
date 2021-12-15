@@ -1,17 +1,13 @@
-import { Activity } from "../../../app/models/activity";
 import { Box, Button, FormControl, FormHelperText, Input, InputLabel, Paper } from '@mui/material/';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { ChangeEvent, useState } from "react";
+import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
-interface Props {
-    activity: Activity | undefined;
-    closeForm: () => void;
-    createOrEditActivity: (activity: Activity) => void;
-    submitting: boolean;
-}
-
-  
-export default function ActivityForm({activity: selectedActivity, closeForm, createOrEditActivity, submitting}: Props) {
+export default observer(function ActivityForm() {
+    const { activityStore } = useStore();
+    const { selectedActivity, closeForm, createActivity, updateActivity, loading } = activityStore;
+    
     const initialState = selectedActivity ?? 
     {
         id: '',
@@ -25,7 +21,7 @@ export default function ActivityForm({activity: selectedActivity, closeForm, cre
     const [activity, setActivity] = useState(initialState);
 
     function handleSubmit() {
-        createOrEditActivity(activity)
+        activity.id ? updateActivity(activity) : createActivity(activity);
     }
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
         const {name, value} = event.target;
@@ -119,7 +115,7 @@ export default function ActivityForm({activity: selectedActivity, closeForm, cre
                 <FormHelperText id="category-helper-text">Is eating 20 tacos a sport?</FormHelperText>
             </FormControl>
 
-            <LoadingButton loading={submitting} variant="contained" onClick={handleSubmit} sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} >
+            <LoadingButton loading={loading} variant="contained" onClick={handleSubmit} sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} >
                 Submit
             </LoadingButton>
             <Button variant="contained" sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} onClick={closeForm}>
@@ -128,4 +124,4 @@ export default function ActivityForm({activity: selectedActivity, closeForm, cre
         </Box>
         </Paper>
     )
-}
+})

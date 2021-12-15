@@ -8,16 +8,12 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { useStore } from '../stores/store';
 
-
-interface Props {
-    openForm: () => void;
-}
-
-const pages = ['Activities'];
-const buttons = ['New Activity'];
-
-const Nav = ({openForm}: Props) => {
+const Nav = () => {
+    const {activityStore} = useStore();
+    const pages = ['Activities'];
+    const buttons = ['New Activity'];
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
     const handleOpenNavMenu = (event: any) => {
@@ -120,7 +116,7 @@ const Nav = ({openForm}: Props) => {
                             <Button
                                 key={button}
                                 variant='contained'
-                                onClick={openForm}
+                                onClick={() => activityStore.openForm()}
                                 sx={{ 
                                     my: 2, 
                                     mx: 2, 

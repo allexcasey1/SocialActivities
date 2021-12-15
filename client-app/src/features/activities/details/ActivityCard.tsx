@@ -1,16 +1,17 @@
-import React, { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Card, CardContent, CardHeader, Typography } from '@mui/material';
 import { Activity } from '../../../app/models/activity';
+import { useStore } from '../../../app/stores/store';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
     activity: Activity;
-    submitting: boolean;
-    selectActivity: (id: string) => void;
-    deleteActivity: (id: string) => void;
 }
 
-export default function ActivityCard({activity, selectActivity, deleteActivity, submitting}: Props) {
+export default observer(function ActivityCard({activity}: Props) {
+    const {activityStore} = useStore();
+    const {deleteActivity, loading } = activityStore;
     const [target, setTarget] = useState('');
 
     function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
@@ -56,14 +57,14 @@ export default function ActivityCard({activity, selectActivity, deleteActivity, 
                         </Typography>
                             <LoadingButton 
                                 name={activity.id} 
-                                loading={submitting && target === activity.id} 
+                                loading={loading && target === activity.id} 
                                 variant="contained" 
                                 sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} 
                                 onClick={ (e) => handleActivityDelete(e, activity.id) }
                             >
                                 Delete
                             </LoadingButton>
-                            <Button variant="contained" sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} onClick={ () => selectActivity(activity.id) }>
+                            <Button variant="contained" sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} onClick={ () => activityStore.selectActivity(activity.id) }>
                                 View
                             </Button>
                     </Box>     
@@ -71,4 +72,4 @@ export default function ActivityCard({activity, selectActivity, deleteActivity, 
             </Box>
         </Card>
     )
-}
+})

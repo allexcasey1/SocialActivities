@@ -1,14 +1,13 @@
 body {
   background-color: #EAEAEA !important;
+  font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, monospace !important;
 }
 /* Nav Style */
 .MuiAppBar-root {
   background-image: linear-gradient(135deg, rgb(24,42,115) 0%, rgb(44, 67, 197) 69%, rgb(26, 123, 214) 89%) !important;
   border-radius: 1vw 2vw / 1vw 2vw !important;
 }
-header .MuiButton-contained.MuiButtonBase-root {
-  font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, monospace !important;
-}
+
 header .MuiButton-contained.MuiButtonBase-root .MuiTypography-root {
   -webkit-text-stroke-width: .6px;
   -webkit-text-stroke-color: black;
