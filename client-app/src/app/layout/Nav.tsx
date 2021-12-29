@@ -8,12 +8,12 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { NavLink } from 'react-router-dom';
 import { useStore } from '../stores/store';
 
 const Nav = () => {
     const {activityStore} = useStore();
-    const pages = ['Activities'];
-    const buttons = ['New Activity'];
+    const {links, buttons} = activityStore;
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
     const handleOpenNavMenu = (event: any) => {
@@ -27,15 +27,18 @@ const Nav = () => {
     return (
         <AppBar id='AppBar' elevation={10} position="sticky" sx={{ marginLeft: '-5px', marginRight: '-5px'}}>
                 <Toolbar >
+                    {/* Brand */}
                     <Typography
                         variant="h6"
                         noWrap
                         component="div"
                         sx={{ mr: 2, display: { xs: 'none', md: 'flex' }}}
                     >
-                        SocialActivities
+                        <NavLink to="/">
+                            SocialActivities
+                        </NavLink>
                     </Typography>
-                    {/* dynamic inputs for mobile view */}
+                    {/* inputs for mobile view */}
                     <Box sx={{ 
                         flexGrow: 0, 
                         display: { xs: 'flex', md: 'none' }
@@ -70,20 +73,29 @@ const Nav = () => {
                                 width: '100%'
                           }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                  <Typography sx={{textAlign: 'left', margin: 'auto auto auto 0'}}>{page}</Typography>
+                            {/* map pages and buttons to nav */}
+                            {links.map((link) => (
+                                <MenuItem key={link.name} onClick={handleCloseNavMenu}>
+                                  
+                                    <Typography sx={{textAlign: 'left', margin: 'auto auto auto 0'}}>
+                                        <NavLink to={link.to}>
+                                            {link.name}
+                                        </NavLink>
+                                    </Typography>
+                                  
                                 </MenuItem>
                             ))}
                             {buttons.map((button) => (
                                 <Button 
-                                    key={button} 
+                                    key={button.name} 
                                     variant='outlined'
                                     onClick={handleCloseNavMenu}
                                     sx={{ my: 0.5, mx: 2, display: 'block' }}
                                 >
                                     <Typography sx={{textAlign: 'left', margin: 'auto auto auto 0'}}>
-                                        {button}
+                                        <NavLink to={button.onClick}>
+                                            {button.name}
+                                        </NavLink>
                                     </Typography>
                                 </Button>
                             ))}
@@ -100,23 +112,26 @@ const Nav = () => {
                     </Typography>
                     {/* dynamic endpoints for desktop view */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                        {links.map((link) => (
                             <Button
-                                key={page}
+                                key={link.name}
                                 variant='text'
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, display: 'block' }}
                             >
-                                {page}
+                                <Typography sx={{textAlign: 'left', margin: 'auto auto auto 0'}}>
+                                    <NavLink to={link.to}>
+                                        {link.name}
+                                    </NavLink>
+                                </Typography>
                             </Button>
                         ))}
                     </Box>
                     <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
                         {buttons.map((button) => (
                             <Button
-                                key={button}
+                                key={button.name}
                                 variant='contained'
-                                onClick={() => activityStore.openForm()}
                                 sx={{ 
                                     my: 2, 
                                     mx: 2, 
@@ -125,9 +140,11 @@ const Nav = () => {
                                 }}
                                 
                             >
+                                <NavLink to={button.onClick}>
                                 <Typography variant="button">
-                                    {button}
+                                       {button.name} 
                                 </Typography>
+                                </NavLink>
                             </Button>
                         ))}
                     </Box>

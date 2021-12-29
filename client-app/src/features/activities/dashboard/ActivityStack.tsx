@@ -1,9 +1,10 @@
 import { Stack } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 import { Activity } from '../../../app/models/activity'
 import { useStore } from '../../../app/stores/store';
 import ActivityCard from '../details/ActivityCard';
 
-export default function ActivityStack() {
+export default observer(function ActivityStack() {
     const {activityStore} = useStore();
     const {activitiesByDate} = activityStore;
 
@@ -17,4 +18,4 @@ export default function ActivityStack() {
             </Stack>
     )
    
-}
+})

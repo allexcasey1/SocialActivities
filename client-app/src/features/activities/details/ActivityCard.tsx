@@ -3,13 +3,13 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Button, Card, CardContent, CardHeader, Typography } from '@mui/material';
 import { Activity } from '../../../app/models/activity';
 import { useStore } from '../../../app/stores/store';
-import { observer } from 'mobx-react-lite';
+import { Link } from 'react-router-dom';
 
 interface Props {
     activity: Activity;
 }
 
-export default observer(function ActivityCard({activity}: Props) {
+export default function ActivityCard({activity}: Props) {
     const {activityStore} = useStore();
     const {deleteActivity, loading } = activityStore;
     const [target, setTarget] = useState('');
@@ -20,6 +20,7 @@ export default observer(function ActivityCard({activity}: Props) {
     }
 
     return (
+        // used for activity stack
         <Card key={activity.id} sx={{borderRadius: '0'}}>
             <CardHeader
                 title={
@@ -64,12 +65,17 @@ export default observer(function ActivityCard({activity}: Props) {
                             >
                                 Delete
                             </LoadingButton>
-                            <Button variant="contained" sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} onClick={ () => activityStore.selectActivity(activity.id) }>
-                                View
+
+                            <Link to={`/activities/${activity.id}`}>
+                            <Button
+                                variant="contained" 
+                                sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} >
+                                    View      
                             </Button>
+                            </Link>
                     </Box>     
                 </CardContent>
             </Box>
         </Card>
     )
-})
+}

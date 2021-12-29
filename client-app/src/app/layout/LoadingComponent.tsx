@@ -10,7 +10,7 @@ export default function LoadingComponent({message = 'Loading...'}: Props) {
     <Box sx={{ 
         position: 'absolute', 
         top: '50%', 
-        left: '50%', 
+        left: '45%', 
         textAlign: 'center',
         fontFamily: ['Lucida Grande', 'Lucida Sans', 'Arial', 'sans-serif', 'monospace'] }}>
       <CircularProgress />

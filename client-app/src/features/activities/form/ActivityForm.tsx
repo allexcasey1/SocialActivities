@@ -1,42 +1,52 @@
-import { Box, Button, FormControl, FormHelperText, Input, InputLabel, Paper } from '@mui/material/';
+import { Box, Button, FormControl, FormHelperText, Input, InputLabel } from '@mui/material/';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
+import { v4 as uuid } from 'uuid';
 
 export default observer(function ActivityForm() {
+    const navigate = useNavigate();
     const { activityStore } = useStore();
-    const { selectedActivity, closeForm, createActivity, updateActivity, loading } = activityStore;
-    
-    const initialState = selectedActivity ?? 
-    {
+    const { createActivity, updateActivity, loading, loadingInitial, loadActivity } = activityStore;
+    const {id} = useParams<{id: string}>();
+
+    const [activity, setActivity] = useState({
         id: '',
         title: '',
         category: '',
         description: '',
         date: '1993-03-03',
         city: '', 
-        venue: ''
-    }
-    const [activity, setActivity] = useState(initialState);
+        venue: '' 
+    });
+
+    useEffect(() => {
+        if (id) loadActivity(id).then(activity => setActivity(activity!))
+    }, [id, loadActivity])
 
     function handleSubmit() {
-        activity.id ? updateActivity(activity) : createActivity(activity);
+        if (activity.id.length === 0) {
+            let newActivity = {
+                ...activity,
+                id: uuid()
+            };
+            createActivity(newActivity).then(() => navigate(`/activities/${newActivity.id}`))
+        } else {
+            updateActivity(activity).then(() => navigate(`/activities/${activity.id}`))
+        }
     }
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
         const {name, value} = event.target;
         setActivity({...activity, [name]: value});
     }
+
+    if (loadingInitial) return <LoadingComponent message='Loading...'></LoadingComponent>
        
     return (
-        <Paper 
-            className={'sticky'}
-            elevation={1}
-            sx={{
-                backgroundColor: '#FFFFFF',
-                height: 'fit-content',
-                padding: '2em',
-            }}>
+        
         <Box
             component="form"
             id='activity-form'
@@ -114,14 +124,17 @@ export default observer(function ActivityForm() {
                     onChange={handleInputChange}/>
                 <FormHelperText id="category-helper-text">Is eating 20 tacos a sport?</FormHelperText>
             </FormControl>
-
-            <LoadingButton loading={loading} variant="contained" onClick={handleSubmit} sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} >
-                Submit
-            </LoadingButton>
-            <Button variant="contained" sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} onClick={closeForm}>
-                Cancel
-            </Button>
+            <Link to="/activities/list">
+                <LoadingButton loading={loading} variant="contained" onClick={handleSubmit} sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} >
+                    Submit
+                </LoadingButton>
+            </Link>
+            <Link to="/activities/list">
+                <Button variant="contained" sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} >
+                    Cancel
+                </Button>
+            </Link>
+            
         </Box>
-        </Paper>
     )
 })
