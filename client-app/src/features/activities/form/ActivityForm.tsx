@@ -124,16 +124,18 @@ export default observer(function ActivityForm() {
                     onChange={handleInputChange}/>
                 <FormHelperText id="category-helper-text">Is eating 20 tacos a sport?</FormHelperText>
             </FormControl>
-            <Link to="/activities/list">
-                <LoadingButton loading={loading} variant="contained" onClick={handleSubmit} sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} >
+            
+            <LoadingButton loading={loading} variant="contained" onClick={handleSubmit} sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} >
+                <Link to="/activities/list">
                     Submit
-                </LoadingButton>
-            </Link>
-            <Link to="/activities/list">
-                <Button variant="contained" sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} >
+                </Link>
+            </LoadingButton>
+            
+            <Button variant="contained" sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} >
+                <Link to="/activities/list">
                     Cancel
-                </Button>
-            </Link>
+                </Link>
+            </Button>
             
         </Box>
     )

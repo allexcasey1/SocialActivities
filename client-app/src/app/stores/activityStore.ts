@@ -7,6 +7,8 @@ export default class ActivityStore {
     selectedActivity: Activity | undefined = undefined;
     loading: boolean = false;
     loadingInitial: boolean = true;
+    date: string = "1";
+    
     links: {name: string, to: string}[] = [
         {name: "Activities", to: "/activities/list"}
     ];
@@ -20,6 +22,16 @@ export default class ActivityStore {
     get activitiesByDate() {
         return Array.from(this.activityRegistry.values()).sort((a, b) => 
             Date.parse(a.date) - Date.parse(b.date));
+    }
+
+    get groupedActivities() {
+        return Object.entries(
+            this.activitiesByDate.reduce((activities, activity) => {
+                const date = activity.date;
+                activities[date] = activities[date] ? [...activities[date], activity] : [activity];
+                return activities;
+            }, {} as {[key: string]: Activity[]})
+        )
     }
 
     loadActivities = async () => {

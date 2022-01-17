@@ -1,9 +1,11 @@
 import { SyntheticEvent, useState } from 'react';
-import { LoadingButton } from '@mui/lab';
-import { Box, Button, Card, CardContent, CardHeader, Typography } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { Avatar, Box, Button, Card, CardContent, CardHeader, Typography, Grid, Divider} from '@mui/material';
 import { Activity } from '../../../app/models/activity';
 import { useStore } from '../../../app/stores/store';
 import { Link } from 'react-router-dom';
+import { DateRange, Place } from '@mui/icons-material';
+import Tag from '../../common/Tag';
 
 interface Props {
     activity: Activity;
@@ -20,62 +22,93 @@ export default function ActivityCard({activity}: Props) {
     }
 
     return (
-        // used for activity stack
-        <Card key={activity.id} sx={{borderRadius: '0'}}>
+        <Card key={activity.id} sx={{borderRadius: '5px', marginBottom: '1em' }}>
+
             <CardHeader
+                avatar={
+                    <Avatar aria-label="user" sx={{ height: 50, width: 50}}>
+                        A
+                    </Avatar>
+                }
                 title={
-                    <Typography variant="h6">
+                    <Typography variant="subtitle1">
                         {activity.title} 
                     </Typography>
                 }
                 subheader={
-                    <Typography variant="subtitle1">
-                        {activity.date}
+                    <Typography variant="subtitle2">
+                        Hosted by Alex
                     </Typography>
                 }
             />
-           
-            <Box>                           
-                <CardContent>
-                    <Box mb={1}>
-                    <Typography variant="body1">
-                            {activity.description}
-                        </Typography>
-                        <Typography variant="body1" sx={{ }}>
-                            at {activity.venue} in {activity.city}  
-                        </Typography>
-                    </Box>
-                    <Box mt={1} sx={{verticalAlign: 'middle'}}>
-                        <Typography 
-                            variant="overline" 
-                            sx={{
-                                border: '1px solid #E3E3E3', 
-                                borderRadius: '5px 5px / 5px 5px', 
-                                padding: '.5em'
-                            }}
-                        >
-                            {activity.category}
-                        </Typography>
+
+           <Divider />
+
+            <CardContent>
+                <Box sx={{height: '2em', verticalAlign: 'top'}}>
+                    <Place sx={{display: 'inline-block', height: '50%'}}/>
+                    <Typography 
+                        variant='body2'
+                        lineHeight={'2px'}
+                        sx={{
+                            display: 'inline-block'}}>
+                                {activity.venue} in {activity.city} 
+                    </Typography> 
+                    <DateRange  sx={{display: 'inline-block', height: '50%'}}/>
+                    <Typography variant='body2' sx={{display: 'inline'}}>
+                        {activity.date} 
+                    </Typography>
+                    <Tag input={activity.category} />
+                </Box>
+            </CardContent>
+
+            <CardContent sx={{ backgroundColor: 'lightGray', border: '.2em solid #fff', verticalAlign: 'top'}}>
+                <Typography variant='body2'>
+                    Attendees:
+                </Typography>
+            </CardContent>
+
+                <Grid container columns={2}>
+
+                    <Grid item xs={1} sm={1} md={1} lg={1} xl={1} >
+                        <Box sx={{ width: 'inherit', height: 'inherit', display: 'inherit', paddingLeft: '1em', verticalAlign: 'middle' }}>
+                            <Typography variant='body2'>{activity.description}</Typography>
+                        </Box>
+                        
+                    </Grid>
+                    
+                    <Grid item xs={1} sm={1} md={1} lg={1} xl={1}>
+                        <Box sx={{ width: 'inherit', height: 'inherit', display: 'inherit', textAlign: 'right', padding: '0.5em', alignItems: 'flex-end' }}>
                             <LoadingButton 
+                                children={
+                                    'Delete'
+                                }
                                 name={activity.id} 
                                 loading={loading && target === activity.id} 
                                 variant="contained" 
-                                sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} 
-                                onClick={ (e) => handleActivityDelete(e, activity.id) }
-                            >
-                                Delete
-                            </LoadingButton>
-
-                            <Link to={`/activities/${activity.id}`}>
-                            <Button
+                                onClick={ (e) => handleActivityDelete(e, activity.id) } 
+                                sx={{backgroundColor: 'fireBrick', borderRadius: '0px', opacity: '80%', '&:hover': {opacity: '100%', backgroundColor: 'fireBrick'}}}/>
+                            <Button 
+                                children={
+                                    <Link to={`/activities/${activity.id}`} >
+                                        View
+                                    </Link>} 
                                 variant="contained" 
-                                sx={{marginLeft: '.5em', marginRight: '.5em', float: 'right'}} >
-                                    View      
-                            </Button>
-                            </Link>
-                    </Box>     
-                </CardContent>
-            </Box>
+                                sx={{
+                                    backgroundColor: 'limeGreen', 
+                                    borderRadius: '0px', 
+                                    opacity: '80%', 
+                                    marginLeft: '1em', 
+                                    '&:hover': {
+                                        opacity: '100%', 
+                                        backgroundColor: 'limeGreen'}
+                                    }} 
+                            />
+                         
+                        </Box>
+                    </Grid>
+                    
+                </Grid>            
         </Card>
     )
 }
