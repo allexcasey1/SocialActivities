@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -21,29 +21,31 @@ export default observer(function ActivityDetails() {
     if (loadingInitial || !selectedActivity) return <LoadingComponent />;
 
     return (
-        <Grid container columns={18} mt={2}>
-            <Grid item lg={12} md={18} sm={18}  mx={1} mt={2}>
-                
-                {selectedActivity &&
-                <Box>
-                    <Box mt={2}>
-                        <ActivityDetailedHeader />
+        <Container>
+            <Grid container columns={18} mb={4} spacing={4}>
+                <Grid item lg={12} md={16} sm={18} mt={2}>
+
+                    {selectedActivity &&
+                    <Box>
+                        <Box mt={2}>
+                            <ActivityDetailedHeader />
+                        </Box>
+                        <Box mt={2}>
+                            <ActivityDetailedInfo />
+                        </Box>
+                        <Box mt={2}>
+                            <ActivityDetailedChat /> 
+                        </Box>
                     </Box>
+                    }
+                </Grid>
+                <Grid item lg={6} md={16} sm={18} xs={18} mt={2}>
                     <Box mt={2}>
-                        <ActivityDetailedInfo />
+                       <ActivityDetailedSidebar /> 
                     </Box>
-                    <Box mt={2}>
-                        <ActivityDetailedChat /> 
-                    </Box>
-                </Box>
-                }
+                </Grid>
             </Grid>
-            <Grid item lg={4} md={18} sm={18} xs={18} mx={1} mt={2}>
-                <Box mt={2}>
-                   <ActivityDetailedSidebar /> 
-                </Box>
-            </Grid>
-        </Grid>
+        </Container>
         
     )
             

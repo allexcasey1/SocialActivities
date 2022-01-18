@@ -26,7 +26,7 @@ export default function HomePage() {
                         border: 'none' } 
                     }}
                 children={
-                    <NavLink to="/activities/list">
+                    <NavLink to="/activities">
                         Take me to my Activity List
                     </NavLink>
                 } 

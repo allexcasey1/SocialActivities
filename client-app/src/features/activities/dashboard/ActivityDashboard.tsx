@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Container } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
@@ -19,14 +19,18 @@ export default observer(function ActivityDashboard() {
       return <LoadingComponent message="Loading App"></LoadingComponent>
 
     return (
-        <Grid container columns={18} spacing={4} mt={2} mx={2} >
-            <Grid item lg={8} md={10} sm={16} xs={18} >
+      <Container>
+        <Grid container columns={18} spacing={4} mt={0.5} >
+            <Grid item lg={10} md={12} sm={16}>
                 <ActivityStack/>
             </Grid>
-            <Grid item mt={4} lg={6} md={4} sm={16} xs={18}>
+
+            <Grid item lg={8} md={6} sm={16} mt={4} >
               <ActivityFilters />
             </Grid>
+
         </Grid>
+      </Container>
     )
 })
 

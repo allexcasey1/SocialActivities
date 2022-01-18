@@ -8,8 +8,9 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useStore } from '../stores/store';
+import { People } from '@mui/icons-material';
 
 const Nav = () => {
     const {activityStore} = useStore();
@@ -35,9 +36,10 @@ const Nav = () => {
                         sx={{ mr: 2, display: { xs: 'none', md: 'flex' }}}
                     >
                         <NavLink to="/">
-                            SocialActivities
+                            <People /> Activities
                         </NavLink>
                     </Typography>
+
                     {/* inputs for mobile view */}
                     <Box sx={{ 
                         flexGrow: 0, 
@@ -54,6 +56,7 @@ const Nav = () => {
                         >
                             <MenuIcon />
                         </IconButton>
+
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
@@ -71,7 +74,7 @@ const Nav = () => {
                             sx={{
                                 display: { xs: 'block', md: 'none' },
                                 width: '100%'
-                          }}
+                            }}
                         >
                             {/* map pages and buttons to nav */}
                             {links.map((link) => (
@@ -88,11 +91,11 @@ const Nav = () => {
                             {buttons.map((button) => (
                                 <Button 
                                     key={button.name} 
-                                    variant='outlined'
+                                    variant='contained'
                                     onClick={handleCloseNavMenu}
-                                    sx={{ my: 0.5, mx: 2, display: 'block' }}
+                                    sx={{ my: 1, mx: 2, display: 'inline-block' }}
                                 >
-                                    <Typography sx={{textAlign: 'left', margin: 'auto auto auto 0'}}>
+                                    <Typography variant='button' sx={{textAlign: 'left', margin: 'auto auto auto 0'}}>
                                         <NavLink to={button.onClick}>
                                             {button.name}
                                         </NavLink>
@@ -107,9 +110,10 @@ const Nav = () => {
                         noWrap
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-                    >
-                        SocialActivities
-                    </Typography>
+                        children={
+                            <Link to="/" children={<>Activities</>} />
+                        }
+                    />
                     {/* dynamic endpoints for desktop view */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {links.map((link) => (
@@ -133,19 +137,18 @@ const Nav = () => {
                                 key={button.name}
                                 variant='contained'
                                 sx={{ 
-                                    my: 2, 
-                                    mx: 2, 
+                                    my: 1, 
+                                    mx: 5, 
                                     display: 'block', 
                                     float: 'right'
                                 }}
+                                children={
+                                    <NavLink to={button.onClick}>
+                                        {button.name} 
+                                    </NavLink>
+                                }
                                 
-                            >
-                                <NavLink to={button.onClick}>
-                                <Typography variant="button">
-                                       {button.name} 
-                                </Typography>
-                                </NavLink>
-                            </Button>
+                            />                                
                         ))}
                     </Box>
                 </Toolbar>

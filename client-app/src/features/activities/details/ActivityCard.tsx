@@ -78,7 +78,7 @@ export default function ActivityCard({activity}: Props) {
                     </Grid>
                     
                     <Grid item xs={1} sm={1} md={1} lg={1} xl={1}>
-                        <Box sx={{ width: 'inherit', height: 'inherit', display: 'inherit', textAlign: 'right', padding: '0.5em', alignItems: 'flex-end' }}>
+                        <Box mx={1} my={1} sx={{ width: 'inherit', height: 'inherit', display: 'inherit', textAlign: 'right', padding: '0.5em', alignItems: 'flex-end' }}>
                             <LoadingButton 
                                 children={
                                     'Delete'

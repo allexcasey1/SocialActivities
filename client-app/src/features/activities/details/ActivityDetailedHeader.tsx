@@ -43,7 +43,7 @@ export default function ActivityDetailedHeader() {
                 </Box>
                 <Box sx={{ textAlign: 'right', display: 'inline-block', height: 'auto', width: '50%'}}>
                     <Button variant="contained" sx={{ margin: '5px', backgroundColor: 'orange !important'}}>
-                        <Link to={`/activities/manage/${selectedActivity.id}`}>
+                        <Link to={`/manage/${selectedActivity.id}`}>
                             Manage Activity
                         </Link>
                     </Button>

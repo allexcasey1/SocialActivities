@@ -10,10 +10,11 @@ export default class ActivityStore {
     date: string = "1";
     
     links: {name: string, to: string}[] = [
-        {name: "Activities", to: "/activities/list"}
+        {name: "Activities", to: "/activities"},
+        {name: "Errors", to: "/errors"}
     ];
     buttons: {name: string, onClick: string}[] = [
-        {name: "Create Activity", onClick: "/activities/create"}
+        {name: "Create Activity", onClick: "/create"}
     ];
     constructor() {
         makeAutoObservable(this)

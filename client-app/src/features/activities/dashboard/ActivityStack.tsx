@@ -12,14 +12,14 @@ export default observer(function ActivityStack() {
     return (
             <Stack spacing={1.5} sx={{ width: '100%'}} >
                 {groupedActivities.map(([group, activities]) => (
-                        <Box key={group} mb={1}>
-                            <Typography color={'#39f'} variant="subtitle1" >{group}</Typography>
-                            {activities.map((activity: Activity) => (
-                              <ActivityCard 
+                    <Box key={group} mb={1}>
+                        <Typography color={'#39f'} variant="subtitle1" >{group}</Typography>
+                        {activities.map((activity: Activity) => (
+                            <ActivityCard 
                                 key={activity.id} 
                                 activity={activity}/>
-                            ))}
-                        </Box>  
+                        ))}
+                    </Box>  
                     ))
                         
                 }
