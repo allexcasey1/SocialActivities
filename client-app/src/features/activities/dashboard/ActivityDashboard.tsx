@@ -21,7 +21,7 @@ export default observer(function ActivityDashboard() {
     return (
       <Container>
         <Grid container columns={18} spacing={4} mt={0.5} >
-            <Grid item lg={10} md={12} sm={16}>
+            <Grid item lg={10} md={12} sm={18}>
                 <ActivityStack/>
             </Grid>
 

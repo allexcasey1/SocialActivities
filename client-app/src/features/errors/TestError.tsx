@@ -32,8 +32,8 @@ export default function TestErrors() {
     }
 
     return (
-        <Container>
-            <Box width={'100%'} mt={5}>
+        <Container sx={{ mb: '4em', mt: '2em' }}>
+            <Box width={'100%'} >
                 <Typography variant='h5' fontWeight={'bold'} children='Test Error component' />
                 <Paper sx={{ marginTop: '1em', padding: '1em' }}>
                     <ButtonGroup fullWidth>

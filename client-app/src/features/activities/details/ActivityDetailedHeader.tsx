@@ -42,11 +42,11 @@ export default function ActivityDetailedHeader() {
                     <Button variant='contained' sx={{ margin: '5px', backgroundColor: 'grey !important'}}>Cancel Attendance</Button>
                 </Box>
                 <Box sx={{ textAlign: 'right', display: 'inline-block', height: 'auto', width: '50%'}}>
-                    <Button variant="contained" sx={{ margin: '5px', backgroundColor: 'orange !important'}}>
-                        <Link to={`/manage/${selectedActivity.id}`}>
-                            Manage Activity
-                        </Link>
-                    </Button>
+                    <Button 
+                        component={Link} 
+                        to={`/manage/${selectedActivity.id}`} 
+                        variant="contained" 
+                        sx={{ margin: '5px', backgroundColor: 'orange !important'}} children={'Manage Activity'} />     
                 </Box>
             </Box>
         </Card>

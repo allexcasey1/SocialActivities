@@ -89,10 +89,8 @@ export default function ActivityCard({activity}: Props) {
                                 onClick={ (e) => handleActivityDelete(e, activity.id) } 
                                 sx={{backgroundColor: 'fireBrick', borderRadius: '0px', opacity: '80%', '&:hover': {opacity: '100%', backgroundColor: 'fireBrick'}}}/>
                             <Button 
-                                children={
-                                    <Link to={`/activities/${activity.id}`} >
-                                        View
-                                    </Link>} 
+                                component={Link}
+                                to={`/activities/${activity.id}`}
                                 variant="contained" 
                                 sx={{
                                     backgroundColor: 'limeGreen', 
@@ -102,7 +100,8 @@ export default function ActivityCard({activity}: Props) {
                                     '&:hover': {
                                         opacity: '100%', 
                                         backgroundColor: 'limeGreen'}
-                                    }} 
+                                }} 
+                                children={'View'}
                             />
                          
                         </Box>

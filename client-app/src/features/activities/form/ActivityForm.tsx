@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormHelperText, Grid, Input, InputLabel, Paper } from '@mui/material/';
+import { Box, Button, Container, FormControl, FormHelperText, Grid, Input, InputLabel, Paper } from '@mui/material/';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { ChangeEvent, useEffect, useState } from "react";
 import { useStore } from "../../../app/stores/store";
@@ -46,12 +46,13 @@ export default observer(function ActivityForm() {
     if (loadingInitial) return <LoadingComponent message='Loading...'></LoadingComponent>
        
     return (
+        <Container sx={{ mt: '2em', mb: '4em'}}>
             <Grid container columns={16}>
-                <Grid item sm={2} md={4} lg={5} />
+                <Grid item sm={1} md={4} lg={4} />
 
-                <Grid item sm={12} md={8} lg={6} > 
+                <Grid item sm={14} md={8} lg={8} > 
 
-                    <Paper sx={{my: '5em'}}>
+                    <Paper>
                         <Box
                             component="form"
                             id='activity-form'
@@ -137,15 +138,18 @@ export default observer(function ActivityForm() {
 
                             {/* Cancel and Submit buttons */}
                             <Box sx={{width: 'auto', float: 'right'}} >
-                                <LoadingButton loading={loading} variant="contained" onClick={handleSubmit} sx={{marginLeft: '.5em', marginRight: '.5em'}} >
-                                    <Link to="/activities">
+                                <LoadingButton 
+                                    component={Link} to="/activities" 
+                                    loading={loading} variant="contained" 
+                                    onClick={handleSubmit} 
+                                    sx={{marginLeft: '.5em', marginRight: '.5em'}} >
                                         Submit
-                                    </Link>
                                 </LoadingButton>
-                                <Button variant="contained" sx={{marginLeft: '.5em', marginRight: '.5em'}} >
-                                    <Link to="/activities">
+                                <Button 
+                                    component={Link} to="/activities" 
+                                    variant="contained" 
+                                    sx={{marginLeft: '.5em', marginRight: '.5em'}} >
                                         Cancel
-                                    </Link>
                                 </Button>
                             </Box>
 
@@ -153,10 +157,8 @@ export default observer(function ActivityForm() {
                     </Paper>
                 </Grid>
 
-                <Grid item sm={2} md={4} lg={5}  />
-
+                <Grid item sm={1} md={4} lg={4}  />
             </Grid>
-            
-            
+        </Container>
     )
 })

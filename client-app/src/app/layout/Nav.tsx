@@ -53,9 +53,11 @@ const Nav = () => {
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu }
                             color="inherit"
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                            children={
+                                <MenuIcon />
+                            }
+                        />
+                            
 
                         <Menu
                             id="menu-appbar"
@@ -79,62 +81,63 @@ const Nav = () => {
                             {/* map pages and buttons to nav */}
                             {links.map((link) => (
                                 <MenuItem key={link.name} onClick={handleCloseNavMenu}>
-                                  
-                                    <Typography sx={{textAlign: 'left', margin: 'auto auto auto 0'}}>
-                                        <NavLink to={link.to}>
-                                            {link.name}
-                                        </NavLink>
-                                    </Typography>
-                                  
+                                    <NavLink to={link.to} children={
+                                        <Typography sx={{textAlign: 'left', margin: 'auto auto auto 0'}} children={
+                                            link.name
+                                        } />
+                                    }/>
                                 </MenuItem>
                             ))}
                             {buttons.map((button) => (
                                 <Button 
+                                    component={NavLink}
+                                    to={button.onClick} 
                                     key={button.name} 
                                     variant='contained'
                                     onClick={handleCloseNavMenu}
                                     sx={{ my: 1, mx: 2, display: 'inline-block' }}
-                                >
-                                    <Typography variant='button' sx={{textAlign: 'left', margin: 'auto auto auto 0'}}>
-                                        <NavLink to={button.onClick}>
-                                            {button.name}
-                                        </NavLink>
-                                    </Typography>
-                                </Button>
+                                    children={
+                                        <Typography variant='button' children={
+                                            button.name
+                                        } />
+                                    }
+                                />
                             ))}
                         </Menu>
                     </Box>
                     {/* brand for sm screens */}
-                    <Typography
+                    <Link to="/" children={
+                        <Typography
                         variant="h6"
                         noWrap
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-                        children={
-                            <Link to="/" children={<>Activities</>} />
-                        }
-                    />
+                        children={'Activities'} />
+                    } />
+                        
                     {/* dynamic endpoints for desktop view */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {links.map((link) => (
                             <Button
+                                component={Link}
+                                to={link.to}
                                 key={link.name}
                                 variant='text'
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, display: 'block' }}
-                            >
-                                <Typography sx={{textAlign: 'left', margin: 'auto auto auto 0'}}>
-                                    <NavLink to={link.to}>
-                                        {link.name}
-                                    </NavLink>
-                                </Typography>
-                            </Button>
+                                children={
+                                    <Typography variant='button' children={link.name} />
+                                }
+                            />
+                               
                         ))}
                     </Box>
                     <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
                         {buttons.map((button) => (
                             <Button
                                 key={button.name}
+                                component={NavLink}
+                                to={button.onClick}
                                 variant='contained'
                                 sx={{ 
                                     my: 1, 
@@ -143,9 +146,7 @@ const Nav = () => {
                                     float: 'right'
                                 }}
                                 children={
-                                    <NavLink to={button.onClick}>
-                                        {button.name} 
-                                    </NavLink>
+                                    button.name
                                 }
                                 
                             />                                
