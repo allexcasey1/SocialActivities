@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Container from '@mui/material/Container';
 import { Link, NavLink } from 'react-router-dom';
 import { useStore } from '../stores/store';
 import { People } from '@mui/icons-material';
@@ -15,9 +16,9 @@ import { People } from '@mui/icons-material';
 const Nav = () => {
     const {activityStore} = useStore();
     const {links, buttons} = activityStore;
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
-    const handleOpenNavMenu = (event: any) => {
+    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
 
@@ -26,26 +27,27 @@ const Nav = () => {
     };
 
     return (
-        <AppBar id='AppBar' elevation={10} position="sticky" sx={{ marginLeft: '-5px', marginRight: '-5px'}}>
+            <AppBar id='AppBar' elevation={10} position="sticky">
                 <Toolbar >
                     {/* Brand */}
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ mr: 2, display: { xs: 'none', md: 'flex' }}}
-                    >
-                        <NavLink to="/">
-                            <People /> Activities
-                        </NavLink>
-                    </Typography>
-
-                    {/* inputs for mobile view */}
+                    <NavLink to="/" children={
+                       <Typography
+                           variant="h6"
+                           noWrap
+                           component="div"
+                           sx={{ mr: 2, display: { xs: 'none', md: 'flex' }}}
+                           children={
+                               <>
+                                   <People /> Activities
+                               </>
+                           } /> 
+                    }/>
+                    
+                    {/* mobile nav menu */}
                     <Box sx={{ 
                         flexGrow: 0, 
                         display: { xs: 'flex', md: 'none' }
-                    }}
-                    >
+                    }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -57,28 +59,22 @@ const Nav = () => {
                                 <MenuIcon />
                             }
                         />
-                            
-
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
                             anchorOrigin={{
                                 vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
+                                horizontal: 'left'}}
                             keepMounted
                             transformOrigin={{
                                 vertical: 'top',
-                                horizontal: 'left',
-                            }}
+                                horizontal: 'left'}}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                             sx={{
-                                display: { xs: 'block', md: 'none' },
-                                width: '100%'
-                            }}
-                        >
-                            {/* map pages and buttons to nav */}
+                                display: { xs: 'block', md: 'none' }}}>
+
+                            {/* map links and buttons to mobile nav */}
                             {links.map((link) => (
                                 <MenuItem key={link.name} onClick={handleCloseNavMenu}>
                                     <NavLink to={link.to} children={
@@ -89,30 +85,28 @@ const Nav = () => {
                                 </MenuItem>
                             ))}
                             {buttons.map((button) => (
-                                <Button 
+                                <Button
                                     component={NavLink}
                                     to={button.onClick} 
+                                    className={'createbutton hover'} 
                                     key={button.name} 
-                                    variant='contained'
+                                    variant='contained' 
                                     onClick={handleCloseNavMenu}
-                                    sx={{ my: 1, mx: 2, display: 'inline-block' }}
                                     children={
-                                        <Typography variant='button' children={
-                                            button.name
-                                        } />
-                                    }
-                                />
+                                        <Typography variant='body2' children={button.name} />
+                                    } />
                             ))}
                         </Menu>
                     </Box>
+
                     {/* brand for sm screens */}
                     <Link to="/" children={
                         <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-                        children={'Activities'} />
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+                            children={'Activities'} />
                     } />
                         
                     {/* dynamic endpoints for desktop view */}
@@ -132,28 +126,24 @@ const Nav = () => {
                                
                         ))}
                     </Box>
+
+                    {/* dynamic buttons for desktop view */}
                     <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
                         {buttons.map((button) => (
                             <Button
+                                className='createbutton hover'
                                 key={button.name}
                                 component={NavLink}
                                 to={button.onClick}
                                 variant='contained'
-                                sx={{ 
-                                    my: 1, 
-                                    mx: 5, 
-                                    display: 'block', 
-                                    float: 'right'
-                                }}
                                 children={
                                     button.name
                                 }
-                                
                             />                                
                         ))}
                     </Box>
                 </Toolbar>
-        </AppBar>
+            </AppBar>
     );
 };
 export default Nav;

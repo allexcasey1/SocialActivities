@@ -1,6 +1,7 @@
 import { Divider, List, ListItem, Typography } from '@mui/material'
 import { DateRange, Place, InfoSharp} from '@mui/icons-material'
 import { useStore } from '../../../app/stores/store'
+import { format } from 'date-fns';
 
 export default function ActivityDetailedInfo() {
     const { activityStore } = useStore();
@@ -12,13 +13,14 @@ export default function ActivityDetailedInfo() {
            <ListItem>
                <Typography variant='body2' children={
                     <>
-                        <DateRange sx={{ marginBottom: '-5px', width: '1em' }}/> 
-                        {activity.date}
+                        <DateRange sx={{ marginBottom: '-5px', width: '1em' }}/> {format(activity.date!, 'dd MMM yyyy h:mm aa')}
                     </> 
                } />
             
             </ListItem>
-            <Divider />
+
+        <Divider />
+
             <ListItem>
                 <Typography variant='body2' children={
                     <>
@@ -26,7 +28,9 @@ export default function ActivityDetailedInfo() {
                     </> 
                 } />
             </ListItem>
-            <Divider />
+
+        <Divider />
+
             <ListItem>
                 <Typography variant='body2' children={
                     <>

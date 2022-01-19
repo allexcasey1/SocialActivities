@@ -2,6 +2,7 @@ import { Box, Button, Card, CardActionArea, CardHeader, Typography } from '@mui/
 import { Link } from 'react-router-dom';
 import { useStore } from '../../../app/stores/store'
 import ActivityDetailedMedia from './ActivityDetailedMedia';
+import { format } from 'date-fns';
 
 export default function ActivityDetailedHeader() {
     const {activityStore} = useStore();
@@ -28,7 +29,7 @@ export default function ActivityDetailedHeader() {
                     }
                     subheader={
                         <Typography variant="subtitle1">
-                            {selectedActivity.date} <br />
+                            {format(selectedActivity.date!, 'dd MMM yyyy')} <br />
                             Hosted by Alex
                         </Typography>
 
@@ -36,17 +37,18 @@ export default function ActivityDetailedHeader() {
                 />
                 <ActivityDetailedMedia />
             </CardActionArea>
-            <Box sx={{ verticalAlign: 'middle', display: 'block', height: 'fit-content', width: '100%', minWidth: '350px' }}>
+            <Box sx={{ my: '.5em', verticalAlign: 'middle', display: 'block', height: 'fit-content', width: '100%', minWidth: '350px' }}>
                 <Box sx={{ display: 'inline-block', height: 'auto', width: '50%' }}>
-                    <Button variant='contained' sx={{ margin: '5px'}}>Join Activity</Button>
-                    <Button variant='contained' sx={{ margin: '5px', backgroundColor: 'grey !important'}}>Cancel Attendance</Button>
+                    <Button className='button submitbutton hover' variant='contained' >Join Activity</Button>
+                    <Button className='button cancelbutton hover' variant='contained' >Cancel Attendance</Button>
                 </Box>
                 <Box sx={{ textAlign: 'right', display: 'inline-block', height: 'auto', width: '50%'}}>
                     <Button 
+                        className="button managebutton hover"
                         component={Link} 
                         to={`/manage/${selectedActivity.id}`} 
                         variant="contained" 
-                        sx={{ margin: '5px', backgroundColor: 'orange !important'}} children={'Manage Activity'} />     
+                        children={'Manage Activity'} />     
                 </Box>
             </Box>
         </Card>

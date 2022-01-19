@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
-import { Avatar, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography } from '@mui/material'
+import { Avatar, Badge, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography } from '@mui/material'
+import { Star } from '@mui/icons-material'
 
 export default observer(function ActivityDetailedSidebar () {
     return (
@@ -21,15 +22,14 @@ export default observer(function ActivityDetailedSidebar () {
                         <ListItemAvatar>
                             <Avatar>AC</Avatar>
                         </ListItemAvatar>
-                        <ListItemText
-                            primary={
-                                <React.Fragment>
-                                    <Typography variant='subtitle1'>
-                                        <Link to={`#`}>Bob</Link>
-                                    </Typography>
-                                    {'following'}
-                                </React.Fragment>
-                            } />
+                        <ListItemText>
+                            <Link to={`#`} children={<Typography variant='subtitle1' children={'Bob'}/>}/>
+                            {'following'}
+                        </ListItemText>
+
+                        <Badge badgeContent={'host'} sx={{ verticalAlign: 'middle' }} >
+                            <Star sx={{fontSize: '2em', color: 'orange' }}/>
+                        </Badge>
                         
                     </ListItem>
 
@@ -39,15 +39,10 @@ export default observer(function ActivityDetailedSidebar () {
                         <ListItemAvatar>
                             <Avatar>AC</Avatar>
                         </ListItemAvatar>
-                        <ListItemText
-                            primary={
-                                <React.Fragment>
-                                    <Typography variant='subtitle1'>
-                                        <Link to={`#`}>Bob</Link>
-                                    </Typography>
-                                    {'following'}
-                                </React.Fragment>
-                            } />
+                        <ListItemText>
+                            <Link to={`#`} children={<Typography variant='subtitle1' children={'Bob'}/>}/>
+                            {'following'}
+                        </ListItemText>
                         
                     </ListItem>
 
@@ -57,15 +52,10 @@ export default observer(function ActivityDetailedSidebar () {
                         <ListItemAvatar>
                             <Avatar>AC</Avatar>
                         </ListItemAvatar>
-                        <ListItemText
-                            primary={
-                                <React.Fragment>
-                                    <Typography variant='subtitle1'>
-                                        <Link to={`#`}>Bob</Link>
-                                    </Typography>
-                                    {'following'}
-                                </React.Fragment>
-                            } />
+                        <ListItemText>
+                            <Link to={`#`} children={<Typography variant='subtitle1' children={'Bob'}/>}/>
+                            {'following'}
+                        </ListItemText>
                         
                     </ListItem>
 

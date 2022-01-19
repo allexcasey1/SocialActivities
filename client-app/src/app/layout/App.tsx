@@ -10,6 +10,7 @@ import TestError from '../../features/errors/TestError';
 import { ToastContainer } from 'react-toastify';
 import NotFound from '../../features/errors/NotFound';
 import ServerError from '../../features/errors/ServerError';
+import CreateActivity from '../../features/activities/form/CreateActivity';
 
 export default observer(function App() {
 
@@ -26,8 +27,8 @@ export default observer(function App() {
           <Route path='activities' element={<ActivityDashboard/>} />
           <Route path='errors' element={<TestError />} />
           <Route path='activities/:id' element={<ActivityDetails/>} />
-          <Route path='create' key={location.key} element={<ActivityForm key={location.key} />} />
-          <Route path='manage/:id' key={location.key} element={<ActivityForm key={location.key} />} />
+          <Route path='create' key={location.key} element={<CreateActivity key={location.key} />} />
+          <Route path='manage/:id' key={location.key} element={<CreateActivity key={location.key} />} />
           <Route path='server-error' element={<ServerError />} />
           <Route path="*" element={<NotFound/>} />
         </Route>

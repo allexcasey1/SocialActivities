@@ -1,11 +1,20 @@
-import { Box, Button, Container, FormControl, FormHelperText, Grid, Input, InputLabel, Paper } from '@mui/material/';
+import { Box, Button, Paper, Typography } from '@mui/material/';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { v4 as uuid } from 'uuid';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import MyTextInput from '../../../app/common/form/MyTextInput';
+import MyTextArea from '../../../app/common/form/MyTextArea';
+import MySelectInput from '../../../app/common/form/MySelectInput';
+import { categoryOptions } from '../../../app/common/options/categoryOptions';
+import MyDateInput from '../../../app/common/form/MyDateInput';
+import { Activity } from '../../../app/models/activity';
+import { format } from 'date-fns';
 
 export default observer(function ActivityForm() {
     const navigate = useNavigate();
@@ -13,21 +22,37 @@ export default observer(function ActivityForm() {
     const { createActivity, updateActivity, loading, loadingInitial, loadActivity } = activityStore;
     const {id} = useParams<{id: string}>();
 
-    const [activity, setActivity] = useState({
+    const [activity, setActivity] = useState<Activity>({
         id: '',
         title: '',
         category: '',
         description: '',
-        date: '1993-03-03',
+        date: null,
         city: '', 
         venue: '' 
     });
+
+    const validationSchema = Yup.object({
+        title: Yup.string()
+            .required('The activity title is required'),
+        description: Yup.string()
+            .required(),
+        venue: Yup.string()
+            .required(),
+        category: Yup.string()
+            .required(),
+        city: Yup.string()
+            .required(),
+        date: Yup.string()
+            .required("The date is required.")
+            .nullable()
+    })
 
     useEffect(() => {
         if (id) loadActivity(id).then(activity => setActivity(activity!))
     }, [id, loadActivity])
 
-    function handleSubmit() {
+    function handleFormSubmit(activity: Activity) {
         if (activity.id.length === 0) {
             let newActivity = {
                 ...activity,
@@ -38,127 +63,69 @@ export default observer(function ActivityForm() {
             updateActivity(activity).then(() => navigate(`/activities/${activity.id}`))
         }
     }
-    function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-        const {name, value} = event.target;
-        setActivity({...activity, [name]: value});
-    }
 
     if (loadingInitial) return <LoadingComponent message='Loading...'></LoadingComponent>
        
     return (
-        <Container sx={{ mt: '2em', mb: '4em'}}>
-            <Grid container columns={16}>
-                <Grid item sm={1} md={4} lg={4} />
+    <Paper >    
+        <Formik 
+            enableReinitialize 
+            initialValues={activity} 
+            validationSchema={validationSchema} 
+            onSubmit={(values) => handleFormSubmit(values)}>
+            {({handleSubmit, isValid, isSubmitting, dirty}) => (
+            
+                <Form onSubmit={handleSubmit} style={{ padding: '1em' }}>
 
-                <Grid item sm={14} md={8} lg={8} > 
+                    <Typography variant='subtitle1' color='teal' px={1} pt={1} children={'Activity Details'}/>
 
-                    <Paper>
-                        <Box
-                            component="form"
-                            id='activity-form'
-                            noValidate
-                            autoComplete="off"
-                            onSubmit={handleSubmit}
-                            sx={{
-                                padding: '2em 2em 4em 2em'
-                            }}>
-                            
-                            {/*Title*/}
-                            <FormControl variant='standard' size='medium' fullWidth>
-                                <InputLabel htmlFor="activity-title">Title</InputLabel>
-                                <Input 
-                                    id="activity-title" 
-                                    aria-describedby="title-helper-text" 
-                                    value={activity.title}
-                                    name="title"
-                                    onChange={handleInputChange} />
-                                <FormHelperText id="title-helper-text">You got this.</FormHelperText>
-                            </FormControl>
+                    <MyTextInput name='title' placeholder='Title' label='Title' 
+                        helptext='Tell them what you want to do.' />
 
-                            {/*Date*/}
-                            <FormControl variant='standard' size='medium' fullWidth>
-                                <InputLabel htmlFor="activity-date">Date</InputLabel>
-                                <Input 
-                                    id="activity-date" 
-                                    aria-describedby="date-helper-text" 
-                                    value={activity.date}
-                                    name="date"
-                                    onChange={handleInputChange}
-                                    type="date" />
-                                <FormHelperText id="title-helper-date">You got this.</FormHelperText>
-                            </FormControl>
+                    <MyDateInput 
+                        placeholderText={format(new Date(), 'dd MMM yyyy h:mm aa')}
+                        name='date' 
+                        label='Date'
+                        showTimeSelect
+                        timeCaption='time'
+                        dateFormat='MMMM d, yyyy h:mm aa'
+                        helpertext="What day is your event?"/>
 
-                            {/* Description */}
-                            <FormControl variant='standard' size='medium' fullWidth>
-                                <InputLabel htmlFor="activity-description">Description</InputLabel>
-                                <Input
-                                    id="activity-description" 
-                                    name="description"
-                                    aria-describedby="description-helper-text"
-                                    value={activity.description}
-                                    onChange={handleInputChange}
-                                    multiline 
-                                    rows={3}
-                                    />
-                                <FormHelperText id="description-helper-text">150 characters max! jk.</FormHelperText>
-                            </FormControl>
-                            {/* Venue */}
-                            <FormControl variant='standard' size='medium' fullWidth >
-                                <InputLabel htmlFor="activity-venue">Venue</InputLabel>
-                                <Input 
-                                    id="activity-venue" 
-                                    name="venue"
-                                    aria-describedby="venue-helper-text" 
-                                    value={activity.venue}
-                                    onChange={handleInputChange}/>
-                                <FormHelperText id="venue-helper-text">Can't help you here</FormHelperText>
-                            </FormControl>
-                            {/* City */}
-                            <FormControl variant='standard' size='medium' fullWidth >
-                                <InputLabel htmlFor="activity-city">City</InputLabel>
-                                <Input 
-                                    id="activity-city" 
-                                    name="city"
-                                    aria-describedby="city-helper-text"
-                                    value={activity.city}
-                                    onChange={handleInputChange}/>
-                                <FormHelperText id="city-helper-text">'Let's have this event in Tucson', said nobody</FormHelperText>
-                            </FormControl>
-                            {/* Category */}
-                            <FormControl variant='standard' size='medium' fullWidth >
-                                <InputLabel htmlFor="activity-category">Category</InputLabel>
-                                <Input 
-                                    id="activity-category" 
-                                    name="category"
-                                    aria-describedby="category-helper-text" 
-                                    value={activity.category}
-                                    onChange={handleInputChange}/>
-                                <FormHelperText id="category-helper-text">Is eating 20 tacos a sport?</FormHelperText>
-                            </FormControl>
+                    <MyTextArea name='description' placeholder='Description' label='Description' 
+                        helptext='Help others know what you want to do.' 
+                        rows={3} />
 
-                            {/* Cancel and Submit buttons */}
-                            <Box sx={{width: 'auto', float: 'right'}} >
-                                <LoadingButton 
-                                    component={Link} to="/activities" 
-                                    loading={loading} variant="contained" 
-                                    onClick={handleSubmit} 
-                                    sx={{marginLeft: '.5em', marginRight: '.5em'}} >
-                                        Submit
-                                </LoadingButton>
-                                <Button 
-                                    component={Link} to="/activities" 
-                                    variant="contained" 
-                                    sx={{marginLeft: '.5em', marginRight: '.5em'}} >
-                                        Cancel
-                                </Button>
-                            </Box>
+                    <MySelectInput name='category' placeholder='Category' label='Category' 
+                        helptext='What type of event is this?' 
+                        options={categoryOptions} />
 
-                        </Box>
-                    </Paper>
-                </Grid>
+                    <Typography variant='subtitle1' color='teal' px={1} pt={1} children={'Location Details'}/>
 
-                <Grid item sm={1} md={4} lg={4}  />
-            </Grid>
-        </Container>
+                    <MyTextInput name='city' placeholder='City' label='City'
+                        helptext='What city is your event in?' />
+
+                    <MyTextInput name='venue' placeholder='Venue' label='Venue'
+                        helptext='Where will your event occur?' />
+                    
+                    <Box sx={{width: '100%', display: 'block', textAlign: 'right'}} >
+                        <Button 
+                            className='button cancelbutton hover'
+                            component={Link} to="/activities" 
+                            variant="contained" >
+                                Cancel
+                        </Button>
+                        <LoadingButton 
+                            disabled={!isValid || !dirty || isSubmitting}
+                            className='button submitbutton hover'
+                            loading={loading} variant="contained"
+                            type='submit' >
+                                Submit
+                        </LoadingButton>
+                    </Box>
+                </Form>
+            
+            )} 
+        </Formik>
+        </Paper>
     )
 })

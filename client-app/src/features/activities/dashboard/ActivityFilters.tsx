@@ -1,24 +1,30 @@
 import React from 'react';
-import { FilterAltSharp } from '@mui/icons-material';
-import { Box, Paper, Typography } from '@mui/material';
+import { FilterAltTwoTone } from '@mui/icons-material';
+import { Box, Divider, Paper, Typography } from '@mui/material';
 import Calendar from 'react-calendar';
 
 export default function ActivityFilters() {
     return(
-        <>
-            <Paper>
-                <FilterAltSharp sx={{display: 'inline', verticalAlign: 'middle', color: '#39f'}} />
+        <Box className='sticky' top={'6em'}>
+            <Paper sx={{verticalAlign: 'middle' }}>
+    
+                <Typography color={'#39f'} variant="subtitle1" fontWeight={'bold'} sx={{backgroundColor: '#ccc'}}
+                    children={
+                        <span>
+                            <FilterAltTwoTone  sx={{display: 'inline', verticalAlign: 'middle'}} />
+                            Filters
+                        </span>
+                    }/>
 
-                <Typography color={'#39f'} variant="subtitle1" fontWeight={'bold'} 
-                            sx={{display: 'inline', lineHeight: '-5px'}}>Filters</Typography>
-
-                <Box ml={1} sx={{width: '100%', marginTop: '0', padding: '0'}} >
+                <Box mx={3} >
                    <Box mt={1.8} height={'2em'} className='filter-option'>
                        <Typography variant='body1' >All Activities</Typography>
                    </Box>
+                   <Divider />
                    <Box mt={1.8} height={'2em'} className='filter-option'>
                        <Typography variant='body1' >I'm Going</Typography>
                    </Box>
+                   <Divider />
                    <Box mt={1.8} pb={1.8} height={'2em'} className='filter-option'>
                        <Typography variant='body1' >I'm Hosting</Typography>
                    </Box>   
@@ -28,7 +34,7 @@ export default function ActivityFilters() {
             <Paper sx={{marginTop: '2em', padding: '1em 2em 2em 2em' }}>
                 <Calendar />       
             </Paper>
-        </>
+        </Box>
     )
 }
 
