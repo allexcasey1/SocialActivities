@@ -11,7 +11,7 @@ export default function ActivityFilters() {
                 <Typography color={'#39f'} variant="subtitle1" fontWeight={'bold'} sx={{backgroundColor: '#ccc', borderRadius: '5px 5px  1px 1px'}}
                     children={
                         <span>
-                            <FilterAltTwoTone  sx={{display: 'inline', verticalAlign: 'middle'}} />
+                            <FilterAltTwoTone sx={{display: 'inline', verticalAlign: 'middle'}} />
                             Filters
                         </span>
                     }/>

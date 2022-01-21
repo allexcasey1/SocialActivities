@@ -7,6 +7,8 @@ using MediatR;
 using Persistence;
 using FluentValidation;
 using Application.Core;
+using Application.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Activities
 {
@@ -29,26 +31,34 @@ namespace Application.Activities
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
         private readonly DataContext _context;
-            public Handler(DataContext context)
+        private readonly IUserAccessor _userAccessor;
+            public Handler(DataContext context, IUserAccessor userAccessor)
             {
+            _userAccessor = userAccessor;
             _context = context;
                 
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                if (request.Activity == null)
+                var user = await _context.Users.FirstOrDefaultAsync(
+                    x => x.UserName == _userAccessor.GetUsername());
+
+                var attendee = new ActivityAttendee
                 {
-                    throw new NullReferenceException(nameof(request.Activity));
-                }
-                else
-                    _context.Activities.Add(request.Activity);
+                    AppUser = user!,
+                    Activity = request.Activity,
+                    IsHost = true
+                };
 
-                    var result = await _context.SaveChangesAsync() > 0;
+                request.Activity.Attendees!.Add(attendee);
 
-                    if (!result) return Result<Unit>.Failure("Failed to create activity");
+                _context.Activities!.Add(request.Activity);
 
+                var result = await _context.SaveChangesAsync() > 0;
 
-                    return Result<Unit>.Success(Unit.Value);
+                if (!result) return Result<Unit>.Failure("Failed to create activity");
+
+                return Result<Unit>.Success(Unit.Value);
             }
         }
 

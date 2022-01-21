@@ -8,7 +8,14 @@ namespace Domain
 {
     public class AppUser : IdentityUser
     {
-        public string? DisplayName { get; set; }
+        public string DisplayName { get; set; }
         public string? UserBio { get; set; }
+        public ICollection<ActivityAttendee> Activities { get; set; } 
+
+        public AppUser() 
+        {
+            DisplayName = null!;
+            Activities = new HashSet<ActivityAttendee>();
+        }
     }
 }
