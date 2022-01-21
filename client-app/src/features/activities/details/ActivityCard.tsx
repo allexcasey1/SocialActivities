@@ -36,41 +36,39 @@ export default function ActivityCard({activity}: Props) {
            <Divider />
 
             <CardContent>
-                <Box sx={{height: '2em', verticalAlign: 'top'}}>
-                    
-                    <Typography 
-                        variant='body2'
-                        display={'inline-block'}
+                <Box pb={'-50px'} display={'block'}>
+                    <Typography variant='body2' display={'inline-block'}
                         children={
                             <>
-                                <Place sx={{display: 'inline-block', height: '50%'}}/>
-                                {activity.venue} 'in' {activity.city}
+                                <Place sx={{display: 'inline', fontSize: '1rem'}}/>
+                                {activity.venue} in {activity.city}
                             </>
                         }/>
-                                
-                    
-                    <Typography variant='body2' display={'inline'}
+                                   
+                    <Typography variant='body2' display={'inline-block'}
+                        ml={2} mr={2}
                         children={ 
                             <>
-                                <DateRange  sx={{display: 'inline-block', height: '50%'}}/> 
+                                <DateRange  sx={{display: 'inline', fontSize: '1rem'}}/> 
                                 {format(activity.date!, 'dd MMM h:mm aa')} 
-                                <Tag input={activity.category} />
+                                <Tag children={activity.category} />
                             </>
-                        } />
-                    
+                        } />    
                 </Box>
             </CardContent>
 
-            <CardContent sx={{ backgroundColor: 'lightGray', border: '.2em solid #fff', verticalAlign: 'top'}}>
-                <Typography variant='body2'>
-                    Attendees:
-                </Typography>
+            <CardContent sx={{ height: '3em', py: 0, px: 0}}>
+                <Box className='attendees'>
+                    <Typography ml={2} pt={1} variant='body2' color={'gray'}>
+                        Attendees:
+                    </Typography>
+                </Box>
             </CardContent>
 
                 <Grid container columns={2}>
 
                     <Grid item xs={1} sm={1} md={1} lg={1} xl={1} >
-                        <Box sx={{ width: 'inherit', height: 'inherit', display: 'inherit', paddingLeft: '1em', verticalAlign: 'middle' }}>
+                        <Box sx={{ width: 'inherit', height: 'inherit', display: 'inherit', pt: '1em', px: '1em', verticalAlign: 'middle' }}>
                             <Typography variant='body2'>{activity.description}</Typography>
                         </Box>
                         

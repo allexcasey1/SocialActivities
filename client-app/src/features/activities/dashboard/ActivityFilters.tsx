@@ -5,10 +5,10 @@ import Calendar from 'react-calendar';
 
 export default function ActivityFilters() {
     return(
-        <Box className='sticky' top={'6em'}>
+        <Box>
             <Paper sx={{verticalAlign: 'middle' }}>
     
-                <Typography color={'#39f'} variant="subtitle1" fontWeight={'bold'} sx={{backgroundColor: '#ccc'}}
+                <Typography color={'#39f'} variant="subtitle1" fontWeight={'bold'} sx={{backgroundColor: '#ccc', borderRadius: '5px 5px  1px 1px'}}
                     children={
                         <span>
                             <FilterAltTwoTone  sx={{display: 'inline', verticalAlign: 'middle'}} />
@@ -31,7 +31,7 @@ export default function ActivityFilters() {
                 </Box>
             </Paper>
         
-            <Paper sx={{marginTop: '2em', padding: '1em 2em 2em 2em' }}>
+            <Paper sx={{marginTop: '2em', py: '1em', px: '1em'}}>
                 <Calendar />       
             </Paper>
         </Box>

@@ -1,14 +1,11 @@
-import { SxProps, Typography } from '@mui/material';
+import { Typography, TypographyProps } from '@mui/material';
 import React from 'react';
 
-interface Props {
-    input: string
-}
-
-export default function Tag({input}: Props, sx: SxProps) {
+export default function Tag(props: TypographyProps ) {
     return (
         <Typography 
-        ml={1}
+            {...props}
+            ml={1}
             variant="overline" 
             lineHeight={'.2em'}
             sx={{
@@ -18,7 +15,7 @@ export default function Tag({input}: Props, sx: SxProps) {
                 padding: '.2em'
             }}
         >
-            {input}
+            
         </Typography> 
     )
 }

@@ -14,7 +14,7 @@ namespace API.DTOs
         [EmailAddress]
         public string? Email { get; set; }
         [Required]
-        [RegularExpression("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(.*[&._-]).{9,18}$", ErrorMessage = "Invalid password")]
+        [RegularExpression("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&]).{9,18}$", ErrorMessage = "Invalid password")]
         public string? Password { get; set; }
 
         [Required]

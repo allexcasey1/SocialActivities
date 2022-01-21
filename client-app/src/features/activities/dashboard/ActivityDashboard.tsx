@@ -16,7 +16,7 @@ export default observer(function ActivityDashboard() {
     }, [activityRegistry, loadActivities])
 
     if(loadingInitial) 
-      return <LoadingComponent message="Loading App"></LoadingComponent>
+      return <LoadingComponent message="Loading Activities"></LoadingComponent>
 
     return (
       <Container>

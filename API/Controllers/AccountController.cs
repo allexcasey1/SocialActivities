@@ -50,11 +50,13 @@ namespace API.Controllers
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
-                return BadRequest("Email taken");
+                ModelState.AddModelError("email", "Email taken");
+                return ValidationProblem(ModelState);
             }
             if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
             {
-                return BadRequest("Username taken");
+                ModelState.AddModelError("username", "Username taken");
+                return ValidationProblem(ModelState);
             }
 
             var user = new AppUser
@@ -70,8 +72,8 @@ namespace API.Controllers
             {
                 return CreateUserObject(user);                
             }
-
-            return BadRequest("Problem registering user");
+            ModelState.AddModelError("failure", "Problem registering user");
+            return ValidationProblem(ModelState);
         }
         [Authorize]
         [HttpGet]

@@ -6,10 +6,10 @@ import Nav from './Nav';
 export default function ActivityLayout() {
     return (
         <Fragment>
-            <Container maxWidth={'xl'} className='sticky navbar'>
+            <Container maxWidth={'xl'}>
                 <Nav />
-            </Container>
-            <Outlet></Outlet>
+            
+            <Outlet></Outlet></Container>
         </Fragment>
     )
 }

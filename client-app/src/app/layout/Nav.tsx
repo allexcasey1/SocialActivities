@@ -1,149 +1,177 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Toolbar from '@mui/material/Toolbar';
+import {AppBar, Box, Button, Toolbar, Typography, Menu, MenuItem, Avatar, Popover, ButtonBase, List, ListItem} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Container from '@mui/material/Container';
 import { Link, NavLink } from 'react-router-dom';
 import { useStore } from '../stores/store';
-import { People } from '@mui/icons-material';
+import { ExpandMore, People } from '@mui/icons-material';
+import { observer } from 'mobx-react-lite';
 
-const Nav = () => {
-    const {activityStore} = useStore();
+export default observer(function Nav() {
+    const {activityStore, userStore: {user, logout}} = useStore();
     const {links, buttons} = activityStore;
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+    const [anchorElPopover, setAnchorElPopover] = React.useState<HTMLButtonElement | null>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
-
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
+    const handleClickPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorElPopover(event.currentTarget);
+    };
+    const handleClosePopover = () => {
+      setAnchorElPopover(null);
+    };
+
+    const openPopover = Boolean(anchorElPopover);
+    const id = openPopover ? 'simple-popover' : undefined;
 
     return (
-            <AppBar id='AppBar' elevation={10} position="sticky">
-                <Toolbar >
-                    {/* Brand */}
-                    <NavLink to="/" children={
-                       <Typography
-                           variant="h6"
-                           noWrap
-                           component="div"
-                           sx={{ mr: 2, display: { xs: 'none', md: 'flex' }}}
-                           children={
-                               <>
-                                   <People /> Activities
-                               </>
-                           } /> 
-                    }/>
-                    
-                    {/* mobile nav menu */}
-                    <Box sx={{ 
-                        flexGrow: 0, 
-                        display: { xs: 'flex', md: 'none' }
-                    }}>
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu }
-                            color="inherit"
-                            children={
-                                <MenuIcon />
-                            }
-                        />
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left'}}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left'}}
-                            open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
-                            sx={{
-                                display: { xs: 'block', md: 'none' }}}>
+        <AppBar id='AppBar' elevation={10} position="sticky">
+            <Toolbar >
 
-                            {/* map links and buttons to mobile nav */}
-                            {links.map((link) => (
-                                <MenuItem key={link.name} onClick={handleCloseNavMenu}>
-                                    <NavLink to={link.to} children={
-                                        <Typography sx={{textAlign: 'left', margin: 'auto auto auto 0'}} children={
-                                            link.name
-                                        } />
-                                    }/>
-                                </MenuItem>
-                            ))}
-                            {buttons.map((button) => (
-                                <Button
-                                    component={NavLink}
-                                    to={button.onClick} 
-                                    className={'createbutton hover'} 
-                                    key={button.name} 
-                                    variant='contained' 
-                                    onClick={handleCloseNavMenu}
-                                    children={
-                                        <Typography variant='body2' children={button.name} />
-                                    } />
-                            ))}
-                        </Menu>
-                    </Box>
-
-                    {/* brand for sm screens */}
-                    <Link to="/" children={
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-                            children={'Activities'} />
-                    } />
-                        
-                    {/* dynamic endpoints for desktop view */}
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                {/* Brand */}
+                <NavLink to="/" children={
+                   <Typography
+                       variant="h6"
+                       noWrap
+                       component="div"
+                       sx={{ mr: 2, display: { xs: 'none', md: 'flex' }}}
+                       children={
+                           <>
+                               <People /> Activities
+                           </>
+                       } /> 
+                }/>
+                
+                {/* mobile nav menu */}
+                <Box sx={{ 
+                    flexGrow: 0, 
+                    display: { xs: 'flex', md: 'none' }
+                }}>
+                    <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleOpenNavMenu }
+                        color="inherit"
+                        children={
+                            <MenuIcon />
+                        }
+                    />
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorElNav}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left'}}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left'}}
+                        open={Boolean(anchorElNav)}
+                        onClose={handleCloseNavMenu}
+                        sx={{
+                            display: { xs: 'block', md: 'none' }}}>
+                        {/* map links and buttons to mobile nav */}
                         {links.map((link) => (
-                            <Button
-                                component={Link}
-                                to={link.to}
-                                key={link.name}
-                                variant='text'
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, display: 'block' }}
-                                children={
-                                    <Typography variant='button' children={link.name} />
-                                }
-                            />
-                               
+                            <MenuItem key={link.name} onClick={handleCloseNavMenu}>
+                                <NavLink to={link.to} children={
+                                    <Typography sx={{textAlign: 'left', margin: 'auto auto auto 0'}} children={
+                                        link.name
+                                    } />
+                                }/>
+                            </MenuItem>
                         ))}
-                    </Box>
-
-                    {/* dynamic buttons for desktop view */}
-                    <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
                         {buttons.map((button) => (
                             <Button
-                                className='createbutton hover'
-                                key={button.name}
                                 component={NavLink}
-                                to={button.onClick}
-                                variant='contained'
+                                to={button.onClick} 
+                                className={'createbutton hover'} 
+                                key={button.name} 
+                                variant='contained' 
+                                onClick={handleCloseNavMenu}
                                 children={
-                                    button.name
-                                }
-                            />                                
+                                    <Typography variant='body2' children={button.name} />
+                                } />
                         ))}
+                    </Menu>
+                </Box>
+
+                {/* brand for sm screens */}
+                <Link to="/" children={
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="div"
+                        sx={{ display: { xs: 'flex', md: 'none' } }}
+                        children={'Activities'} />
+                } />
+                    
+                {/* dynamic routes for desktop view */}
+                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    {links.map((link) => (
+                        <Button
+                            component={Link}
+                            to={link.to}
+                            key={link.name}
+                            variant='text'
+                            onClick={handleCloseNavMenu}
+                            children={
+                                <Typography variant='button' children={link.name} />
+                            }
+                        />
+                           
+                    ))}
+                    {buttons.map((button) => (
+                        <Button
+                            className='button createbutton hover'
+                            key={button.name}
+                            component={NavLink}
+                            to={button.onClick}
+                            children={
+                                button.name
+                            }
+                        />                                
+                    ))}
+                </Box>
+                {/* dynamic buttons for desktop view */}
+                <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+                    <Box component={ButtonBase} onClick={handleClickPopover} >
+                        <Avatar src={user?.image} sx={{ mr: '0.5em'}} />
+                        <Typography variant='body2' fontSize={'1.6em'} my={2} sx={{ verticalAlign: 'middle'}} children={
+                            user?.displayName
+                        } />
+                        <ExpandMore display={'inline'}/>
                     </Box>
-                </Toolbar>
-            </AppBar>
+                    
+
+                    <Popover
+                        id={id}
+                        open={openPopover}
+                        anchorEl={anchorElPopover}
+                        onClose={handleClosePopover}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                        }}>
+                            <List>
+                                <ListItem>
+                                    <Button fullWidth component={Link} to={`/profile/${user?.username}`} 
+                                        children={'Profile'} />
+                                </ListItem>
+                                <ListItem>
+                                    <Button fullWidth onClick={logout} component={Link} to={'/'} 
+                                        children={'Logout'} />
+                                </ListItem>
+                            </List>
+                        </Popover>
+                </Box>
+            </Toolbar>
+        </AppBar>
     );
-};
-export default Nav;
+})

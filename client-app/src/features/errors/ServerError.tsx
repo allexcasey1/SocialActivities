@@ -8,14 +8,14 @@ export default observer(function ServerError() {
     const {commonStore } = useStore();
     return (
         <Container>
-            <Box mt={2}>
-                <Typography variant='h3' children={
+            <Typography variant='h3' lineHeight={'1em'} mt={'1em'} children={
                     <>Server Error</>
                 } />
+            <Box mt={2}>
                 <Typography variant='h5' color={'red'} children={commonStore.error?.message} />
                 {commonStore.error?.details && (
                     <Paper>
-                        <Box padding={2} margin={2}>
+                        <Box padding={2}>
                             <Typography variant='h4' children={<>Stack Trace <Code /></>} color='teal' />
                             <code style={{marginTop: '10px'}}>{commonStore.error.details}</code>
                         </Box>
