@@ -145,7 +145,7 @@ export default class ActivityStore {
             })
         }
     }
-    updateAttendance = async () => {{
+    updateAttendance = async () => {
         const user = store.userStore.user;
         this.loading = true;
         try {
@@ -167,7 +167,7 @@ export default class ActivityStore {
         } finally {
             runInAction(() => this.loading = false);
         }
-    }}
+    }
 
     cancelActivityToggle = async () => {
         this.loading = true;

@@ -13,7 +13,7 @@ export default observer( function ProfileCard({profile}: Props) {
 
     return (
         <Paper sx={{ margin: -3}}>
-        <Card component={Link} to={`/profiles/${profile.image}`}  >
+        <Card component={Link} to={`/profiles/${profile.username}`}  >
             <CardHeader 
                 avatar={
                     <Avatar src={profile.image} variant="square"/>}

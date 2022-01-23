@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
-import { Avatar, Badge, BadgeProps, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Paper, Stack, Typography } from '@mui/material'
+import { Avatar, Badge, BadgeProps, Box, List, ListItem, ListItemAvatar, ListItemText, Paper, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles';
 import { Activity } from '../../../app/models/activity'
-import { StarTwoTone } from '@mui/icons-material'
 
 interface Props {
     activity: Activity;

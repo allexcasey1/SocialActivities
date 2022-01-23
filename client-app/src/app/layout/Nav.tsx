@@ -101,7 +101,9 @@ export default observer(function Nav() {
                                 } />
                         ))}
                     </Menu>
+                    
                 </Box>
+                
 
                 {/* brand for sm screens */}
                 <Link to="/" children={
@@ -112,6 +114,38 @@ export default observer(function Nav() {
                         sx={{ display: { xs: 'flex', md: 'none' } }}
                         children={'Activities'} />
                 } />
+
+                <Box sx={{ flexGrow: 0, display: { xs: 'block', md: 'none' }, width: '100%' }}>
+                    <Box component={ButtonBase} onClick={handleClickPopover} sx={{ float: 'right' }}>
+                        <Avatar src={user?.image} sizes='90' sx={{ mr: '5px'}}/>
+                        <Typography variant='body2' fontSize={'1.6em'} my={2} sx={{ verticalAlign: 'middle'}} children={
+                            user?.displayName
+                        } />
+                        <ExpandMore display={'inline'}/>
+                    </Box>
+                    
+
+                    <Popover
+                        id={id}
+                        open={openPopover}
+                        anchorEl={anchorElPopover}
+                        onClose={handleClosePopover}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                        }}>
+                            <List>
+                                <ListItem>
+                                    <Button fullWidth component={Link} to={`/profiles/${user?.username}`} 
+                                        children={'Profile'} />
+                                </ListItem>
+                                <ListItem>
+                                    <Button fullWidth onClick={logout} component={Link} to={'/'} 
+                                        children={'Logout'} />
+                                </ListItem>
+                            </List>
+                        </Popover>
+                </Box>
                     
                 {/* dynamic routes for desktop view */}
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
@@ -162,7 +196,7 @@ export default observer(function Nav() {
                         }}>
                             <List>
                                 <ListItem>
-                                    <Button fullWidth component={Link} to={`/profile/${user?.username}`} 
+                                    <Button fullWidth component={Link} to={`/profiles/${user?.username}`} 
                                         children={'Profile'} />
                                 </ListItem>
                                 <ListItem>

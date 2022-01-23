@@ -13,6 +13,7 @@ import CreateActivity from '../../features/activities/form/CreateActivity';
 import { useStore } from '../stores/store';
 import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/Modals/ModalContainer';
+import ProfilePage from '../../features/profiles/ProfilePage';
 
 export default observer(function App() {
 
@@ -43,6 +44,7 @@ export default observer(function App() {
           <Route path='activities/:id' element={<ActivityDetails/>} />
           <Route path='create' key={location.key} element={<CreateActivity key={location.key} />} />
           <Route path='manage/:id' key={location.key} element={<CreateActivity key={location.key} />} />
+          <Route path='profiles/:username' element={<ProfilePage />} />
           <Route path='server-error' element={<ServerError />} />
           <Route path="*" element={<NotFound/>} />
         </Route>

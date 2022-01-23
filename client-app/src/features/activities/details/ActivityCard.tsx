@@ -18,17 +18,25 @@ export default function ActivityCard({activity}: Props) {
                 <Alert severity='error' variant='filled' sx={{ borderRadius: '0 5px 0 25px', float: 'right', opacity: '85%'}} children={'Cancelled'} />
             )}
             <CardHeader
-                avatar={ <Avatar aria-label="user" sx={{ height: 75, width: 75}} children={
-                    <Typography variant='h2' children={
-                        activity.host!.displayName.split('')[0]
-                    } />
-                } /> }
+                avatar={ 
+                    <Avatar aria-label="user" sx={{ height: 75, width: 75}} children={
+                        activity.host!.image ? (
+                            <img alt="user" src={activity.host?.image} width="75" height="75" />
+                        ) : (
+                            <Typography variant='h2' children={
+                                activity.host!.displayName.split('')[0]
+                            } /> )
+                    } /> 
+                }
 
                 title={ <Typography variant="subtitle1" children={activity.title} /> }
 
                 subheader={ 
                 <>
-                    <Typography variant="subtitle1" children={ `Hosted by ${activity.host?.displayName}` } /> <br />
+                    <Link to={`/profiles/${activity.host}`} children={
+                        <Typography variant="subtitle1" children={ `Hosted by ${activity.host?.displayName}` } />
+                    }/>
+                     <br />
                     {activity.isHost && (
                         <Tag color={"orange"} children={'You are hosting this activity'} />
                     )}
@@ -36,7 +44,6 @@ export default function ActivityCard({activity}: Props) {
                         <Tag color={"limegreen"} children={'You are going to this activity'} />
                     )}
                 </>}
-                children={<h1>Hello</h1>}
             />
 
            <Divider />

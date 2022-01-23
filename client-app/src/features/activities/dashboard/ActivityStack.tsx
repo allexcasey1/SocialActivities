@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite';
 import { Activity } from '../../../app/models/activity'
 import { useStore } from '../../../app/stores/store';
 import ActivityCard from '../details/ActivityCard';
-import { format } from 'date-fns';
 
 export default observer(function ActivityStack() {
     const {activityStore} = useStore();
