@@ -41,7 +41,7 @@ export default observer(function ActivityDetails() {
                 </Grid>
                 <Grid item lg={6} md={16} sm={18} xs={18} mt={2}>
                     <Box mt={2}>
-                       <ActivityDetailedSidebar /> 
+                       <ActivityDetailedSidebar activity={selectedActivity!} /> 
                     </Box>
                 </Grid>
             </Grid>

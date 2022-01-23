@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {AppBar, Box, Button, Toolbar, Typography, Menu, MenuItem, Avatar, Popover, ButtonBase, List, ListItem} from '@mui/material';
+import {AppBar, Box, Button, Toolbar, Typography, Menu, MenuItem, Avatar, Popover, ButtonBase, List, ListItem, Container} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, NavLink } from 'react-router-dom';
@@ -31,7 +31,8 @@ export default observer(function Nav() {
 
     return (
         <AppBar id='AppBar' elevation={10} position="sticky">
-            <Toolbar >
+            <Container>
+            <Toolbar>
 
                 {/* Brand */}
                 <NavLink to="/" children={
@@ -91,7 +92,7 @@ export default observer(function Nav() {
                             <Button
                                 component={NavLink}
                                 to={button.onClick} 
-                                className={'createbutton hover'} 
+                                className={'button createbutton hover'} 
                                 key={button.name} 
                                 variant='contained' 
                                 onClick={handleCloseNavMenu}
@@ -172,6 +173,7 @@ export default observer(function Nav() {
                         </Popover>
                 </Box>
             </Toolbar>
+            </Container>
         </AppBar>
     );
 })

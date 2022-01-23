@@ -2,10 +2,13 @@ import React from 'react';
 import { FilterAltTwoTone } from '@mui/icons-material';
 import { Box, Divider, Paper, Typography } from '@mui/material';
 import Calendar from 'react-calendar';
+import { BoxProps } from '@mui/system';
 
-export default function ActivityFilters() {
+
+
+export default function ActivityFilters(props: BoxProps) {
     return(
-        <Box>
+        <Box {...props}>
             <Paper sx={{verticalAlign: 'middle' }}>
     
                 <Typography color={'#39f'} variant="subtitle1" fontWeight={'bold'} sx={{backgroundColor: '#ccc', borderRadius: '5px 5px  1px 1px'}}

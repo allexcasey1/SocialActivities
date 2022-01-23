@@ -13,7 +13,7 @@ import MyTextArea from '../../../app/common/form/MyTextArea';
 import MySelectInput from '../../../app/common/form/MySelectInput';
 import { categoryOptions } from '../../../app/common/options/categoryOptions';
 import MyDateInput from '../../../app/common/form/MyDateInput';
-import { Activity } from '../../../app/models/activity';
+import { Activity, ActivityFormValues } from '../../../app/models/activity';
 import { format } from 'date-fns';
 
 export default observer(function ActivityForm() {
@@ -22,15 +22,7 @@ export default observer(function ActivityForm() {
     const { createActivity, updateActivity, loading, loadingInitial, loadActivity } = activityStore;
     const {id} = useParams<{id: string}>();
 
-    const [activity, setActivity] = useState<Activity>({
-        id: '',
-        title: '',
-        category: '',
-        description: '',
-        date: null,
-        city: '', 
-        venue: '' 
-    });
+    const [activity, setActivity] = useState<ActivityFormValues>(new ActivityFormValues());
 
     const validationSchema = Yup.object({
         title: Yup.string()
@@ -49,11 +41,11 @@ export default observer(function ActivityForm() {
     })
 
     useEffect(() => {
-        if (id) loadActivity(id).then(activity => setActivity(activity!))
+        if (id) loadActivity(id).then(activity => setActivity(new ActivityFormValues(activity)))
     }, [id, loadActivity])
 
-    function handleFormSubmit(activity: Activity) {
-        if (activity.id.length === 0) {
+    function handleFormSubmit(activity: ActivityFormValues) {
+        if (!activity.id) {
             let newActivity = {
                 ...activity,
                 id: uuid()
@@ -115,9 +107,9 @@ export default observer(function ActivityForm() {
                                 Cancel
                         </Button>
                         <LoadingButton 
-                            disabled={!isValid || !dirty || isSubmitting}
                             className='button submitbutton hover'
-                            loading={loading} variant="contained"
+                            disabled={isSubmitting || !dirty || !isValid}
+                            loading={isSubmitting} variant="contained"
                             type='submit' >
                                 Submit
                         </LoadingButton>

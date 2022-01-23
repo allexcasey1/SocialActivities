@@ -1,10 +1,28 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
-import { Avatar, Badge, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography } from '@mui/material'
-import { Star } from '@mui/icons-material'
+import { Avatar, Badge, BadgeProps, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Paper, Stack, Typography } from '@mui/material'
+import { styled } from '@mui/material/styles';
+import { Activity } from '../../../app/models/activity'
+import { StarTwoTone } from '@mui/icons-material'
 
-export default observer(function ActivityDetailedSidebar () {
+interface Props {
+    activity: Activity;
+}
+
+const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+    '& .MuiBadge-badge': {
+      right: 0,
+      top: -10,
+      height: '2em',
+      backgroundColor: 'gold',
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: '8px',
+    },
+  }));
+
+export default observer(function ActivityDetailedSidebar({activity: {attendees, host}}: Props) {
+    if (!attendees) return null;
     return (
         <Paper>
             <Box
@@ -13,54 +31,29 @@ export default observer(function ActivityDetailedSidebar () {
                 color='white'
             >
                 <Typography variant={'h6'}>
-                    3 people going    
+                    {attendees.length} {attendees.length === 1 ? 'Person' : 'People'} going
                 </Typography>
             </Box>
-            <Box>
-                <List>
-                    <ListItem sx={{ position: 'relative' }}>
+            <List component={Stack} dense>
+                {attendees.map(attendee => (
+                    <ListItem key={attendee.username} divider >
                         <ListItemAvatar>
-                            <Avatar>AC</Avatar>
+                            <Avatar src={attendee.image} children={attendee.displayName.split('')[0].toUpperCase()}/>
                         </ListItemAvatar>
                         <ListItemText>
-                            <Link to={`#`} children={<Typography variant='subtitle1' children={'Bob'}/>}/>
+                            <Link to={`/profiles/${attendee.username}`} children={<Typography variant='subtitle1' children={attendee.displayName}/>}/>
                             {'following'}
                         </ListItemText>
-
-                        <Badge badgeContent={'host'} sx={{ verticalAlign: 'middle' }} >
-                            <Star sx={{fontSize: '2em', color: 'orange' }}/>
-                        </Badge>
-                        
+                        {attendee.username === host?.username && (
+                            <StyledBadge 
+                                badgeContent={
+                                    <Typography variant='inherit' color={'blue'} fontSize={'12px'} children={'Host'} /> } >
+                            </StyledBadge> 
+                        )}
                     </ListItem>
-
-                    <Divider />
-
-                    <ListItem sx={{ position: 'relative' }}>
-                        <ListItemAvatar>
-                            <Avatar>AC</Avatar>
-                        </ListItemAvatar>
-                        <ListItemText>
-                            <Link to={`#`} children={<Typography variant='subtitle1' children={'Bob'}/>}/>
-                            {'following'}
-                        </ListItemText>
-                        
-                    </ListItem>
-
-                    <Divider />
-
-                    <ListItem sx={{ position: 'relative' }}>
-                        <ListItemAvatar>
-                            <Avatar>AC</Avatar>
-                        </ListItemAvatar>
-                        <ListItemText>
-                            <Link to={`#`} children={<Typography variant='subtitle1' children={'Bob'}/>}/>
-                            {'following'}
-                        </ListItemText>
-                        
-                    </ListItem>
-
-                </List>
-            </Box>
+                ))}
+                
+            </List>
         </Paper>
 
     )

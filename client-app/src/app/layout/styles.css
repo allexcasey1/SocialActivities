@@ -1,6 +1,11 @@
 body {
   background-color: #EAEAEA !important;
 }
+
+.stateless-color, .stateless-color:visited {
+  color: white !important;
+}
+
 /* Nav Style */
 .MuiAppBar-root {
   background-image: linear-gradient(135deg, rgb(24,42,115) 0%, rgb(44, 67, 197) 69%, rgb(26, 123, 214) 89%) !important;
@@ -12,6 +17,7 @@ body {
   border-radius: 5px 5px / 5px 5px;
 }
 
+/* Default Fonts */
 .MuiTypography-root, .MuiButtonBase-root {
   Font-family: 'Rubik', sans-serif !important;
 }

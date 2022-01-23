@@ -21,12 +21,12 @@ export default observer(function ActivityDashboard() {
     return (
       <Container>
         <Grid container columns={18} spacing={4} mt={0.5} >
-            <Grid item lg={10} md={12} sm={18}>
+            <Grid item lg={12} md={12} sm={16}>
                 <ActivityStack/>
             </Grid>
 
-            <Grid item lg={8} md={6} sm={16} mt={4} >
-              <ActivityFilters />
+            <Grid item lg={6} md={6} sm={16} mt={4} >
+              <ActivityFilters className='sticky' sx={{ top: '5em' }}/>
             </Grid>
 
         </Grid>

@@ -12,6 +12,7 @@ export default function ActivityDetailedMedia() {
                 component="img"
                 image={`/assets/categoryImages/${selectedActivity.category}.jpg`}
                 alt="Paella dish"
+                sx={{ zIndex: 300, borderRadius: '5px'}}
             />
     )
 }

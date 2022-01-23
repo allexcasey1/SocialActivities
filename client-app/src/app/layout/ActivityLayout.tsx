@@ -6,9 +6,9 @@ import Nav from './Nav';
 export default function ActivityLayout() {
     return (
         <Fragment>
-            <Container maxWidth={'xl'}>
-                <Nav />
             
+                <Nav />
+            <Container >
             <Outlet></Outlet></Container>
         </Fragment>
     )

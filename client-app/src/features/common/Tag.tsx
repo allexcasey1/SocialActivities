@@ -1,18 +1,21 @@
 import { Typography, TypographyProps } from '@mui/material';
 import React from 'react';
 
-export default function Tag(props: TypographyProps ) {
+
+
+export default function Tag(props: TypographyProps) {
     return (
         <Typography 
             {...props}
-            ml={1}
-            variant="overline" 
-            lineHeight={'.2em'}
+            variant="caption" 
             sx={{
-                display: 'inline',
-                border: '1px solid #E3E3E3', 
+                display: 'inline-block',
+                border: `2px solid ${props.color}`,
                 borderRadius: '5px 5px / 5px 5px', 
-                padding: '.2em'
+                pt: '0.1em',
+                px: '.4em',
+                my: '0em',
+                height: 'fit-content'
             }}
         >
             

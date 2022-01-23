@@ -1,4 +1,4 @@
-import { Divider, List, ListItem, Typography } from '@mui/material'
+import { Divider, List, ListItem, Paper, Typography } from '@mui/material'
 import { DateRange, Place, InfoSharp} from '@mui/icons-material'
 import { useStore } from '../../../app/stores/store'
 import { format } from 'date-fns';
@@ -9,7 +9,7 @@ export default function ActivityDetailedInfo() {
 
     if (activity === undefined) return null;
     return (
-        <List sx={{ backgroundColor: 'white', borderRadius: '5px 5px / 5px 5px'}}>
+        <List component={Paper} sx={{ backgroundColor: 'white', borderRadius: '5px 5px / 5px 5px'}}>
            <ListItem>
                <Typography variant='body2' children={
                     <>
