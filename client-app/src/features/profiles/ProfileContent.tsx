@@ -1,32 +1,36 @@
 import { Box, Paper, Tab, Tabs, Typography } from '@mui/material';
 import React from 'react';
+import { Profile } from '../../app/models/profile';
 import ProfilePhotos from './ProfilePhotos';
 
 interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-  }
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+interface Props {
+  profile: Profile;
+}
   
-  function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-  
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box sx={{ p: 3 }}>
-            <Typography component={'span'}>{children}</Typography>
-          </Box>
-        )}
-      </div>
-    );
-  }
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography component={'span'}>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
 
 function a11yProps(index: number) {
     return {
@@ -35,11 +39,11 @@ function a11yProps(index: number) {
     };
   }
 
-export default function ProfileContent() {
+export default function ProfileContent({profile}: Props) {
 
     const panes = [
         {value: 'About', index: 0, render: () => 'About Content'},
-        {value: 'Photos', index: 1, render: () => <Box><ProfilePhotos /></Box>},
+        {value: 'Photos', index: 1, render: () => <Box><ProfilePhotos profile={profile} /></Box>},
         {value: 'Events', index: 2, render: () => 'Events Content'},
         {value: 'Followers', index: 3, render: () => 'Followers Content'},
         {value: 'Following', index: 4, render: () => 'Following Content'},

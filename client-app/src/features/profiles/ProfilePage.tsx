@@ -22,7 +22,7 @@ export default observer(function ProfilePage() {
     return(
         <Container sx={{ minWidth: '580px' }}>
             <ProfileHeader profile={profile!} />
-            <ProfileContent />
+            <ProfileContent profile={profile!} />
         </Container>
     )
 })

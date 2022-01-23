@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Photos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -14,7 +15,6 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(command));
         }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
