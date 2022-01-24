@@ -1,6 +1,7 @@
 import { Box, Paper, Tab, Tabs, Typography } from '@mui/material';
 import React from 'react';
 import { Profile } from '../../app/models/profile';
+import ProfileAbout from './ProfileAbout';
 import ProfilePhotos from './ProfilePhotos';
 
 interface TabPanelProps {
@@ -42,7 +43,7 @@ function a11yProps(index: number) {
 export default function ProfileContent({profile}: Props) {
 
     const panes = [
-        {value: 'About', index: 0, render: () => 'About Content'},
+        {value: 'About', index: 0, render: () => <Box><ProfileAbout /></Box>},
         {value: 'Photos', index: 1, render: () => <Box><ProfilePhotos profile={profile} /></Box>},
         {value: 'Events', index: 2, render: () => 'Events Content'},
         {value: 'Followers', index: 3, render: () => 'Followers Content'},

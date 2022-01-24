@@ -24,6 +24,7 @@ export default observer(function ActivityListItemAttendee({attendees}: Props) {
                             >
                                 <Avatar className='stateless-color' component={Link} 
                                     to={`/profiles/${attendee.username}`} 
+                                    src={attendee.image}
                                     children={
                                         attendee.displayName.split('')[0].toUpperCase()
                                     } />
