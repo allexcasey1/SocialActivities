@@ -7,9 +7,16 @@ import { useStore } from '../stores/store';
 import { ExpandMore, People } from '@mui/icons-material';
 import { observer } from 'mobx-react-lite';
 
+const links: {name: string, to: string}[] = [
+    {name: "Activities", to: "/activities"},
+    {name: "Errors", to: "/errors"}
+];
+const buttons: {name: string, onClick: string}[] = [
+    {name: "Create Activity", onClick: "/create"}
+];
+
 export default observer(function Nav() {
-    const {activityStore, userStore: {user, logout}} = useStore();
-    const {links, buttons} = activityStore;
+    const {userStore: {user, logout}} = useStore();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElPopover, setAnchorElPopover] = React.useState<HTMLButtonElement | null>(null);
 

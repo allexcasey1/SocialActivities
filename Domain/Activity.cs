@@ -13,6 +13,9 @@ namespace Domain
         public string Venue { get; set; }
         public bool IsCancelled { get; set; }
         public ICollection<ActivityAttendee> Attendees { get; set; } 
+            
+        public ICollection<Comment>? Comments { get; set; } = new HashSet<Comment>();
+            
 
         public Activity()
         {
