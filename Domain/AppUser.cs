@@ -14,6 +14,11 @@ namespace Domain
             = new HashSet<ActivityAttendee>();
         public ICollection<Photo> Photos { get; set; } 
             = new HashSet<Photo>();
+        
+        public ICollection<UserFollowing> Followings { get; set; }
+            = new HashSet<UserFollowing>();
+        public ICollection<UserFollowing> Followers { get; set; }
+            = new HashSet<UserFollowing>();
 
         public AppUser() 
         {

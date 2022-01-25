@@ -19,7 +19,7 @@ import { format } from 'date-fns';
 export default observer(function ActivityForm() {
     const navigate = useNavigate();
     const { activityStore } = useStore();
-    const { createActivity, updateActivity, loadingInitial, loadActivity } = activityStore;
+    const { createActivity, updateActivity, loadingInitial, loadActivity, clearSelectedActivity } = activityStore;
     const {id} = useParams<{id: string}>();
 
     const [activity, setActivity] = useState<ActivityFormValues>(new ActivityFormValues());
@@ -41,8 +41,9 @@ export default observer(function ActivityForm() {
     })
 
     useEffect(() => {
-        if (id) loadActivity(id).then(activity => setActivity(new ActivityFormValues(activity)))
-    }, [id, loadActivity])
+        if (id) loadActivity(id).then(activity => setActivity(new ActivityFormValues(activity)));
+        return () => clearSelectedActivity();
+    }, [id, loadActivity, clearSelectedActivity])
 
     function handleFormSubmit(activity: ActivityFormValues) {
         if (!activity.id) {
@@ -56,7 +57,7 @@ export default observer(function ActivityForm() {
         }
     }
 
-    if (loadingInitial) return <LoadingComponent message='Loading...'></LoadingComponent>
+    if (loadingInitial) return <LoadingComponent message='loading form...' />
        
     return (
     <Paper >    

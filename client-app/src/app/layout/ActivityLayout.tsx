@@ -6,10 +6,11 @@ import Nav from './Nav';
 export default function ActivityLayout() {
     return (
         <Fragment>
+            <Nav />
             
-                <Nav />
             <Container >
-            <Outlet></Outlet></Container>
+                <Outlet></Outlet>
+            </Container>
         </Fragment>
     )
 }

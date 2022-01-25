@@ -1,9 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Profile } from '../../app/models/profile';
-import { Avatar, Card, CardContent, CardHeader, Paper, Typography } from '@mui/material';
+import { Avatar, Card, CardActions, CardContent, CardHeader, Divider, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Person } from '@mui/icons-material';
+import FollowButton from './FollowButton';
 
 interface Props {
     profile: Profile;
@@ -17,27 +18,25 @@ export default observer( function ProfileCard({profile}: Props) {
     }
 
     return (
-        <Paper sx={{ margin: -3}}>
-            <Card component={Link} to={`/profiles/${profile.username}`}  >
-                <CardHeader 
-                    avatar={
-                        <Avatar src={profile.image} variant="square" children={profile.displayName[0]}
-                            sx={{ height: 150, width: 150 }}/>}
-                    />
-                <CardContent children={
-                    <Typography variant='h6' children={profile.displayName} />
-                } />
-                <CardContent children={
-                    <Typography variant='body1' children={truncate(profile.bio)} />
-                } />
-                <CardContent children={
-                    <>
-                        <Person />
-                        20 Followers
-                    </>
-                }/>
+        <Card sx={{margin: -1, pr: 1, height: 350, width: 150, fontSize: '1em'}}>
+            <CardHeader 
+                avatar={
+                    <Avatar src={profile.image} variant="square" 
+                        children={<Typography style={{fontSize: '2em'}}>{profile.displayName[0]}</Typography>}
+                        sx={{ height: 125, width: 125, mb: -2.5 }}/>}
 
-            </Card>
-        </Paper>
+                />
+            <CardContent sx={{height: '25%'}}>
+                <Typography variant='subtitle2' children={<Link to={`/profiles/${profile.username}`}>{profile.displayName}</Link>} />
+                <Typography variant='caption' children={truncate(profile.bio)} />
+            </CardContent>  
+            <Divider /> 
+            <Typography variant='caption' color={'gray'} >
+                <Person /> {profile.followersCount} {profile.followersCount === 1 ? 'follower' : 'followers'} 
+            </Typography>
+                <CardActions>
+                     <FollowButton profile={profile}/>
+                </CardActions> 
+        </Card>
     )
 })

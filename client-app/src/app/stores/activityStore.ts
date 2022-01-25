@@ -183,6 +183,33 @@ export default class ActivityStore {
             runInAction(() => this.loading = false)
         }
     }
+    // optimizable (probably just memoize agent rather than here to save space)
+    // memoize attendees so that each activity only needs to refer to cache for duplicates
+    updateAttendanceFollowing = async (username: string) => {
+        this.activityRegistry.forEach(activity => {
+            activity.attendees.forEach(attendee => {
+                if (attendee.username == username) {
+                    attendee.following ? attendee.followersCount-- : attendee.followersCount++;
+                    attendee.following = !attendee.following;
+                }
+            })
+        })
+    }
+
+    updateMainImage = async (url: string) => {
+        const username = store.userStore.user?.username;
+        this.activityRegistry.forEach((activity) => {
+            if (activity.host?.username === username) {
+                activity.host!.image = url;
+            }
+            activity.attendees.forEach((attendee) => {
+                if (attendee.username === username) {
+                    attendee.image = url;
+                }
+            })
+            
+        }
+    )}
 
     clearSelectedActivity = () => {
         this.selectedActivity = undefined;

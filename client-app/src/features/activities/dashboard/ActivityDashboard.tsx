@@ -15,8 +15,7 @@ export default observer(function ActivityDashboard() {
       if (activityRegistry.size <= 1) loadActivities();
     }, [activityRegistry, loadActivities])
 
-    if(loadingInitial) 
-      return <LoadingComponent message="Loading Activities"></LoadingComponent>
+    if(loadingInitial) return <LoadingComponent message="Loading Activities..." />
 
     return (
       <Container>

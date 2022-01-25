@@ -36,7 +36,6 @@ export default function ActivityCard({activity}: Props) {
                     <Link to={`/profiles/${activity.host}`} children={
                         <Typography variant="subtitle1" children={ `Hosted by ${activity.host?.displayName}` } />
                     }/>
-                     <br />
                     {activity.isHost && (
                         <Tag color={"orange"} children={'You are hosting this activity'} />
                     )}

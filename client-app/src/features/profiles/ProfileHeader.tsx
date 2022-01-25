@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { Profile } from '../../app/models/profile';
+import FollowButton from './FollowButton';
 
 interface Props {
     profile: Profile | undefined;
@@ -22,7 +23,9 @@ const [following, setFollowing] = useState<boolean>(true);
                 <Grid item lg={2} md={2} sm={3} xs={3} flexGrow={1} sx={{ height: 'inherit' }} >
 
                     <Box sx={{ height: '100%', width: '100%' }}>
-                        <Avatar variant='square' src={profile.image} sx={{width: '100%', height: 'auto', aspectRatio: '1/1', marginTop: 'auto', marginBottom: 'auto'}}
+                        <Avatar variant='square' src={profile.image} 
+                            sx={{width: '100%', height: 'auto', aspectRatio: '1/1', 
+                                marginTop: 'auto', marginBottom: 'auto'}}
                             children={
                                 <Typography variant='h1' sx={{ width: '100%'}}
                                     children={ profile.displayName.split('')[0]} />
@@ -51,14 +54,17 @@ const [following, setFollowing] = useState<boolean>(true);
 
                             <Box display={'block'}>
                                 <Box display={'inline-block'} px={2}>
-                                    <Typography children={<><span style={{fontSize: '2rem'}}>5</span> <br/> FOLLOWERS <br /> </>} /> 
+                                    <Typography children={<><span style={{fontSize: '2rem'}}>
+                                        {profile.followersCount}</span> <br/> FOLLOWERS <br /> </>} /> 
                                 </Box>
                                 <Box display={'inline-block'} px={2}>
-                                    <Typography children={<><span style={{fontSize: '2rem'}}>40</span> <br /> FOLLOWING <br /> </>} />
+                                    <Typography children={<><span style={{fontSize: '2rem'}}>{profile.followingCount}</span> <br /> FOLLOWING <br /> </>} />
                                 </Box>
                             </Box>
 
-                            <Box display={'block'} mx={'2em'}>
+                            <FollowButton profile={profile}/>
+
+                            {/* <Box display={'block'} mx={'2em'}>
                                 <Button 
                                     fullWidth variant='contained' 
                                     onClick={() => setFollowing(!following)}
@@ -67,7 +73,7 @@ const [following, setFollowing] = useState<boolean>(true);
                                 >
                                     {following ? 'Following' : 'Follow'}
                                 </Button>
-                            </Box>
+                            </Box> */}
 
                         </Box>
                     </Box>

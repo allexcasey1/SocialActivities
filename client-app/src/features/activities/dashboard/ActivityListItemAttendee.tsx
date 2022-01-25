@@ -10,6 +10,10 @@ interface Props {
 }
 
 export default observer(function ActivityListItemAttendee({attendees}: Props) {
+    const styles = {
+        borderColor: 'orange',
+        borderWidth: 2
+    }
    
     return (
         < List component={Stack} direction={'row'} sx={{ paddingLeft: 1 }}>
@@ -23,11 +27,23 @@ export default observer(function ActivityListItemAttendee({attendees}: Props) {
                                 <ProfileCard profile={attendee} />} 
                             >
                                 <Avatar className='stateless-color' component={Link} 
+                                    variant='circular'
                                     to={`/profiles/${attendee.username}`} 
                                     src={attendee.image}
                                     children={
                                         attendee.displayName.split('')[0].toUpperCase()
-                                    } />
+                                    }
+                                    imgProps={{
+                                        alt: 'follower',
+                                        decoding: 'async'
+                                    }}
+                                    sx={{
+                                        border: '2px solid gray',
+                                        boxShadow: 'none',
+                                        height: '50px',
+                                        width: '50px' }} 
+                                    style={attendee.following ? {...styles} : {}  }/>
+
                             </Tooltip>
                         } 
                     /> 

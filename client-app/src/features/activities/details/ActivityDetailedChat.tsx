@@ -25,8 +25,8 @@ export default observer(function ActivityDetailedChat({activityId}: Props) {
     }, [commentStore, activityId])
 
     return (
-        <Paper sx={{ backgroundColor: 'white', width: '100%', borderRadius: '5px 5px / 5px 5px'}}>
-            <Box textAlign={'center'} sx={{ backgroundColor: 'rgb(25, 118, 210)', height: '2em', borderRadius: '5px 5px / 5px 5px' }}>
+        <Paper sx={{ backgroundColor: 'white', width: '100%', borderRadius: '5px 5px 5px 5px'}}>
+            <Box textAlign={'center'} sx={{ backgroundColor: 'rgb(25, 118, 210)', height: '2em', borderRadius: '5px 5px 0 0' }}>
                 <Typography variant={'h5'} sx={{ verticalAlign: 'middle', color: 'white' }}>Chat</Typography>  
             </Box>
 

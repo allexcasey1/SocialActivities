@@ -28,7 +28,7 @@ export default observer(function App() {
     }
   }, [commonStore, userStore])
 
-  if (!commonStore.appLoaded) return <LoadingComponent message='Loading app...' />
+  if (!commonStore.appLoaded) return <LoadingComponent message='Loading app...' /> 
   
   return (
     <Fragment>

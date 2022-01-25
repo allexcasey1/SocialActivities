@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
+import { Star } from '@mui/icons-material'
 import { Avatar, Badge, BadgeProps, Box, List, ListItem, ListItemAvatar, ListItemText, Paper, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles';
 import { Activity } from '../../../app/models/activity'
@@ -26,7 +27,7 @@ export default observer(function ActivityDetailedSidebar({activity: {attendees, 
         <Paper>
             <Box
                 textAlign='center'
-                sx={{ border: 'none', backgroundColor: 'rgb(25, 118, 210)', height: '2em', borderRadius: '5px 5px / 5px 5px' }}
+                sx={{ border: 'none', backgroundColor: 'rgb(25, 118, 210)', height: '2em', borderRadius: '5px 5px 0 0' }}
                 color='white'
             >
                 <Typography variant={'h6'}>
@@ -37,11 +38,18 @@ export default observer(function ActivityDetailedSidebar({activity: {attendees, 
                 {attendees.map(attendee => (
                     <ListItem key={attendee.username} divider >
                         <ListItemAvatar>
-                            <Avatar src={attendee.image} children={attendee.displayName.split('')[0].toUpperCase()}/>
+                            <Avatar src={attendee.image} children={attendee.displayName.split('')[0].toUpperCase()}
+                                variant='square' sx={{ height: '3em', width: '3em'}}/>
                         </ListItemAvatar>
                         <ListItemText>
-                            <Link to={`/profiles/${attendee.username}`} children={<Typography variant='subtitle1' children={attendee.displayName}/>}/>
-                            {'following'}
+                            <Box sx={{position: 'absolute', top: 0.5, pl: 1}}>
+                                <Link to={`/profiles/${attendee.username}`} 
+                                    children={<Typography variant='body1' children={attendee.displayName}/>}/>
+                            </Box>
+                            <Box sx={{position: 'absolute', top: 20, pl: 1.2}}>
+                                {attendee.following && <Typography variant='body2' color={'orange'} sx={{fontWeight: 'bold'}}
+                                    children={<>Following </>}/>}
+                            </Box>
                         </ListItemText>
                         {attendee.username === host?.username && (
                             <StyledBadge 
