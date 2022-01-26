@@ -9,7 +9,7 @@ export default observer( function ProfileFollowings() {
     const {profileStore: {profile, followings, loadingFollowings, activeTab}} = useStore();
 
 
-    if (loadingFollowings) return <Dimmer active={true}><CircularProgress></CircularProgress></Dimmer>
+    if (loadingFollowings) return <Box sx={{width: '100%', textAlign: 'center'}}><CircularProgress></CircularProgress></Box>
 
     return (
         <>

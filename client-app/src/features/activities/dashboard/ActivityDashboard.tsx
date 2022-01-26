@@ -1,4 +1,4 @@
-import { Grid, Container, Stack } from '@mui/material';
+import { Grid, Container, Stack, CircularProgress, Box } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { PagingParams } from '../../../app/models/pagination';
@@ -49,6 +49,11 @@ export default observer(function ActivityDashboard() {
                     initialLoad={false} 
                 >
                       <ActivityStack />
+                      {loadingNext && (
+                        <Box sx={{width: '100%', textAlign: 'center'}}>
+                          <CircularProgress />
+                        </Box>
+                      )}
                 </InfiniteScroll>
               )}
               
@@ -59,9 +64,7 @@ export default observer(function ActivityDashboard() {
               <ActivityFilters className='sticky' sx={{ top: '5em' }}/>
             </Grid>
 
-            <Grid item lg={12} md={12} sm={16}>
-              <Loader active={true} />
-            </Grid>
+            
 
         </Grid>
       </Container>

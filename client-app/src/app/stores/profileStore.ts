@@ -11,6 +11,7 @@ export default class ProfileStore {
     loadingFollowings = false;
     followings: Profile[] = [];
     activeTab = 0;
+    eventTab = 0;
     userActivities: UserActivity[] = [];
     loadingActivities = false;
     
@@ -33,6 +34,10 @@ export default class ProfileStore {
 
     setActiveTab = (activeTab: number) => {
         this.activeTab = activeTab;
+    }
+
+    setEventTab = (eventTab: number) => {
+        this.eventTab = eventTab;
     }
 
     get isCurrentUser() {
@@ -191,6 +196,10 @@ export default class ProfileStore {
                 this.loadingActivities = false;
             })
         }
+    }
+
+    clearUserActivities = () => {
+        this.userActivities = [];
     }
 
 }
