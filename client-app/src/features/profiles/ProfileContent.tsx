@@ -1,8 +1,10 @@
 import { Box, Paper, Tab, Tabs, Typography } from '@mui/material';
 import React from 'react';
+import { Container } from 'semantic-ui-react';
 import { Profile } from '../../app/models/profile';
 import { useStore } from '../../app/stores/store';
 import ProfileAbout from './ProfileAbout';
+import ProfileActivities from './ProfileActivities';
 import ProfileFollowings from './ProfileFollowings';
 import ProfilePhotos from './ProfilePhotos';
 
@@ -47,7 +49,7 @@ export default function ProfileContent({profile}: Props) {
     const panes = [
         {value: 'About', index: 0, render: () => <Box><ProfileAbout /></Box>},
         {value: 'Photos', index: 1, render: () => <Box><ProfilePhotos profile={profile} /></Box>},
-        {value: 'Events', index: 2, render: () => 'Events Content'},
+        {value: 'Events', index: 2, render: () => <ProfileActivities />},
         {value: 'Followers', index: 3, render: () => <Box><ProfileFollowings /></Box>},
         {value: 'Following', index: 4, render: () => <Box><ProfileFollowings /></Box>},
     ]

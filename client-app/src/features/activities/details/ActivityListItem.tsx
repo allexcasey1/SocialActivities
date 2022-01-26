@@ -11,7 +11,7 @@ interface Props {
     activity: Activity;
 }
 
-export default function ActivityCard({activity}: Props) {
+export default function ActivityListItem({activity}: Props) {
     return (
         <Card key={activity.id} sx={{borderRadius: '5px', marginBottom: '1em' }}>
             {activity.isCancelled && (
