@@ -7,8 +7,6 @@ import ActivityFilters from './ActivityFilters';
 // import ActivityForm from '../form/ActivityForm';
 import ActivityStack from './ActivityStack';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Loader } from 'semantic-ui-react';
-import React from 'react';
 import ActivityListItemPlaceholder from './ActivityListItemPlaceholder';
 
 export default observer(function ActivityDashboard() {

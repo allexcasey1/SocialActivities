@@ -197,9 +197,4 @@ export default class ProfileStore {
             })
         }
     }
-
-    clearUserActivities = () => {
-        this.userActivities = [];
-    }
-
 }

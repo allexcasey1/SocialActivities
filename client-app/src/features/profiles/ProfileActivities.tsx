@@ -1,12 +1,11 @@
-import React, { SyntheticEvent, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../app/stores/store';
 import { UserActivity } from '../../app/models/profile';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { Box } from '@mui/system';
-import { Avatar, Card, CardContent, CardHeader, CardMedia, CircularProgress, Container, Grid, Paper, Stack, Tab, Tabs, Typography } from '@mui/material';
-import { Loader } from 'semantic-ui-react';
+import { Card, CardContent, CardHeader, CardMedia, CircularProgress, Grid, Paper, Tab, Tabs, Typography } from '@mui/material';
 
 const panes = [
     {value: 'Future Events', index: 0, pane: { key: 'future'} },
@@ -51,14 +50,12 @@ export default observer(function ProfileActivities() {
         loadUserActivities,
         profile,
         loadingActivities,
-        userActivities,
-        clearUserActivities
+        userActivities
     } = profileStore;
     const [value, setValue] = React.useState(0);
 
     useEffect(() => {
         loadUserActivities(profile!.username);
-        return clearUserActivities();
         }, [loadUserActivities, profile]);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -68,57 +65,51 @@ export default observer(function ProfileActivities() {
     };
 
     return (
-
-            <Box sx={{ width: '100%', marginTop: '2em' }}>
-                <Box sx={{ borderBottom: 1, border: '1px solid gray', borderRadius: '5px', backgroundColor: 'lightsteelblue'}}>
-                    
-                    <Tabs value={value} onChange={handleChange} aria-label="profile panes" >
-                        {panes.map(pane => (
-                            <Tab key={pane.index} label={pane.value} {...a11yProps(pane.index)} value={pane.index}   />
-                        ))}
-                    </Tabs>
-                    
-                </Box>
-                <Box>
+        <Box sx={{ width: '100%', marginTop: '2em' }}>
+            <Box sx={{ borderBottom: 1, border: '1px solid gray', borderRadius: '5px', backgroundColor: 'lightsteelblue'}}>
+                
+                <Tabs value={value} onChange={handleChange} aria-label="profile panes" >
                     {panes.map(pane => (
-                        <TabPanel key={pane.index} value={value} index={pane.index} >
-                            <Grid container spacing={2} columns={12}>
-                            {!loadingActivities && (
-                                userActivities.map((activity: UserActivity) => (
-                                    <Grid key={activity.id} item >
-                                        <Paper>
-                                            <Card component={Link} to={`/activities/${activity.id}`} sx={{borderRadius: '0'}}>
-                                                <CardMedia
-                                                    image={`/assets/categoryImages/${activity.category}.jpg`}
-                                                    component="img"
-                                                    height="100"
-                                                />
-                                                <CardHeader
-                                                    title={activity.title}
-                                                    />
-                                                <CardContent>
-                                                    <div>{format(new Date(activity.date), 'do LLL')}</div>
-                                                    <div>{format(new Date(activity.date), 'h:mm a')}</div>
-                                                </CardContent>
-                                            </Card>
-                                        </Paper>
-                                    </Grid>
-                                )))}
-                            
-                                <Grid item md={12} lg={12} xl={12} columns={12}>
-                                    <Box width={'100%'} sx={{ textAlign: 'center' }} >
-                                        {loadingActivities && (<CircularProgress />)}
-                                    </Box>
-                                    
-                                </Grid>
-                            </Grid>
-                        </TabPanel>
-                           
+                        <Tab key={pane.index} label={pane.value} {...a11yProps(pane.index)} value={pane.index}   />
                     ))}
-                    
-                </Box>
-                    
+                </Tabs>
+                
             </Box>
+            <Box>
+                {panes.map(pane => (
+                    <TabPanel key={pane.index} value={value} index={pane.index} >
+                        <Grid container spacing={2} columns={12}>
+                        {!loadingActivities && (
+                            userActivities.map((activity: UserActivity) => (
+                                <Grid key={activity.id} item >
+                                    <Paper>
+                                        <Card component={Link} to={`/activities/${activity.id}`} sx={{borderRadius: '0'}}>
+                                            <CardMedia
+                                                image={`/assets/categoryImages/${activity.category}.jpg`}
+                                                component="img"
+                                                height="100"
+                                            />
+                                            <CardHeader
+                                                title={activity.title}
+                                            />
+                                            <CardContent>
+                                                <div>{format(new Date(activity.date), 'do LLL')}</div>
+                                                <div>{format(new Date(activity.date), 'h:mm a')}</div>
+                                            </CardContent>
+                                        </Card>
+                                    </Paper>
+                                </Grid>
+                            )))}
+                            <Grid item md={12} lg={12} xl={12} columns={12}>
+                                <Box width={'100%'} sx={{ textAlign: 'center' }} >
+                                    {loadingActivities && (<CircularProgress />)}
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    </TabPanel>
+                ))}
+            </Box>
+        </Box>
     )
 })
     

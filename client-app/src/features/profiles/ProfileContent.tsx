@@ -1,6 +1,5 @@
 import { Box, Paper, Tab, Tabs, Typography } from '@mui/material';
 import React from 'react';
-import { Container } from 'semantic-ui-react';
 import { Profile } from '../../app/models/profile';
 import { useStore } from '../../app/stores/store';
 import ProfileAbout from './ProfileAbout';

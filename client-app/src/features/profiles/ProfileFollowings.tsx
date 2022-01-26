@@ -1,7 +1,5 @@
 import { Box, Grid, Stack, ListItem, Typography, List, CircularProgress } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { Dimmer } from 'semantic-ui-react';
 import { useStore } from '../../app/stores/store';
 import ProfileCard from './ProfileCard';
 
