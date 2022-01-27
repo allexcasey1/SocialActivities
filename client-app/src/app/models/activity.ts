@@ -37,10 +37,13 @@ export class ActivityFormValues {
             this.title = activity.title;
             this.category = activity.category;
             this.description = activity.description;
-            this.date = activity.date;
+            this.date = new Date(`${activity.date}Z`);
             this.city = activity.city;
             this.venue = activity.venue;
         }
     }
+
+    
 }
+
 

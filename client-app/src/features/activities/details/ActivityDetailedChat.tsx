@@ -1,11 +1,10 @@
-import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText, OutlinedInput, Paper, Typography } from '@mui/material';
+import { Avatar, Box, CircularProgress, List, ListItem, ListItemAvatar, ListItemText, OutlinedInput, Paper, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import React, { useEffect } from 'react'
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
 import { Field, FieldProps, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { Loader } from 'semantic-ui-react';
 import { formatDistanceToNow } from 'date-fns';
 
 interface Props {
@@ -40,13 +39,15 @@ export default observer(function ActivityDetailedChat({activityId}: Props) {
                 })}
                 >
                     {({isSubmitting, isValid, handleSubmit}) => (
-                        <Form className='form'>
+                        <Form className='form' autoComplete={'off'}>
                             <Field 
                                 name='body'
                             >
                                 {(props: FieldProps) => (
                                     <Box>
-                                        <Loader active={isSubmitting} />
+                                        {isSubmitting && (
+                                            <CircularProgress />
+                                        )}
                                         <Box sx={{width: '100%'}}>
                                             <OutlinedInput
                                                 fullWidth
@@ -69,16 +70,6 @@ export default observer(function ActivityDetailedChat({activityId}: Props) {
                                     </Box>
                                 )}
                             </Field>
-                            {/* <Box width={'auto'} mx={2} py={2}>
-                                <MyTextAreaContained placeholder={'Add comment'} name={'body'} rows={2} />
-                            </Box>
-                            <LoadingButton 
-                                fullWidth 
-                                loading={isSubmitting} disabled={isSubmitting || !isValid}
-                                children={
-                                    <><Edit /> 'Add Reply'</> } 
-                                type='submit'
-                            /> */}
                         </Form>
                     )}
 

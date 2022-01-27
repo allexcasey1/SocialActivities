@@ -8,12 +8,14 @@ import App from './app/layout/App';
 import { store, StoreContext } from './app/stores/store';
 import { createBrowserHistory } from 'history';
 import { CustomRouter } from './app/router/CustomRouter';
+import ScrollToTop from './app/layout/ScrollToTop';
 
 export const history = createBrowserHistory(); 
 
 ReactDOM.render(
     <StoreContext.Provider value={store} >
       <CustomRouter history={history} >
+        <ScrollToTop />
          <App />
       </CustomRouter>
     </StoreContext.Provider>,

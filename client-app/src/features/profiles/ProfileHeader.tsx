@@ -1,7 +1,7 @@
-import { Avatar, Button, Grid, Paper, Typography } from '@mui/material';
+import { Avatar, Grid, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React from 'react';
 import { Profile } from '../../app/models/profile';
 import FollowButton from './FollowButton';
 
@@ -11,7 +11,6 @@ interface Props {
 
 
 export default observer(function ProfileHeader({profile}: Props) {
-const [following, setFollowing] = useState<boolean>(true);
 
     if (!profile) return null;
 

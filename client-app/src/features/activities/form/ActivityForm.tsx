@@ -46,6 +46,9 @@ export default observer(function ActivityForm() {
     }, [id, loadActivity, clearSelectedActivity])
 
     function handleFormSubmit(activity: ActivityFormValues) {
+        var now_utc =  Date.UTC(activity.date!.getUTCFullYear(), activity.date!.getUTCMonth(), activity.date!.getUTCDate(),
+            activity.date!.getUTCHours(), activity.date!.getUTCMinutes(), activity.date!.getUTCSeconds());
+
         if (!activity.id) {
             let newActivity = {
                 ...activity,

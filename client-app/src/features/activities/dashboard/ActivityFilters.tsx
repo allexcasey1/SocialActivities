@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import { FilterAltTwoTone } from '@mui/icons-material';
 import { Box, Divider, MenuItem, MenuList, Paper, Typography } from '@mui/material';
 import Calendar from 'react-calendar';

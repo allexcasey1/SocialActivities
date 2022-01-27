@@ -14,7 +14,7 @@ export default class commentStore {
     createHubConnection = (activityId: string) => {
         if (store.activityStore.selectedActivity) {
             this.hubConnection = new HubConnectionBuilder()
-                .withUrl('http://localhost:5000/chat?activityId=' + activityId, {
+                .withUrl(process.env.REACT_APP_CHAT_URL + '?activityId=' + activityId, {
                     accessTokenFactory: () => store.userStore.user?.token!
 
                 })
@@ -27,7 +27,7 @@ export default class commentStore {
             this.hubConnection.on('LoadComments', (comments: ChatComment[]) => {
                 runInAction(() => {
                     comments.forEach(comment => {
-                        comment.createdAt = new Date(comment.createdAt + 'Z');
+                        comment.createdAt = new Date(comment.createdAt);
                     })
                     this.comments = comments;
 
@@ -54,7 +54,7 @@ export default class commentStore {
 
     addComment = async (values: any) => {
         values.activityId = store.activityStore.selectedActivity?.id;
-
+        values.Date = `${values.Date}Z`;
         try {
             await this.hubConnection!.invoke('SendComment', values);
         } catch (error) {

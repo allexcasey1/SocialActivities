@@ -11,7 +11,6 @@ export default class ActivityStore {
     selectedActivity: Activity | undefined = undefined;
     loading: boolean = false;
     loadingInitial: boolean = false;
-    date: string = "1";
     pagination: Pagination | null = null;
     pagingParams = new PagingParams();
     predicate = new Map().set('all', true);
@@ -72,7 +71,7 @@ export default class ActivityStore {
         params.append('pageSize', this.pagingParams.pageSize.toString());
         this.predicate.forEach((value, key) => {
             if (key === 'startDate') {
-                params.append(key, (value as Date).toISOString())
+                params.append(key, (value as Date).toUTCString())
             } else {
                 params.append(key, value);
             }

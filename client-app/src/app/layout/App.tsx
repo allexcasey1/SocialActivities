@@ -14,6 +14,7 @@ import { useStore } from '../stores/store';
 import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/Modals/ModalContainer';
 import ProfilePage from '../../features/profiles/ProfilePage';
+import { PrivateRoute } from './PrivateRoute';
 
 export default observer(function App() {
 
@@ -39,12 +40,12 @@ export default observer(function App() {
         <Route path='/' element={<HomePage/>} />
 
         <Route path={'/*'} element = { <ActivityLayout /> } >
-          <Route path='activities' element={<ActivityDashboard/>} />
+          <Route path='activities' element={<PrivateRoute><ActivityDashboard/></PrivateRoute>} />
           <Route path='errors' element={<TestError />} />
-          <Route path='activities/:id' element={<ActivityDetails/>} />
-          <Route path='create' key={location.key} element={<CreateActivity key={location.key} />} />
-          <Route path='manage/:id' key={location.key} element={<CreateActivity key={location.key} />} />
-          <Route path='profiles/:username' element={<ProfilePage />} />
+          <Route path='activities/:id' element={<PrivateRoute><ActivityDetails/></PrivateRoute>} />
+          <Route path='create' key={location.key} element={<PrivateRoute><CreateActivity key={location.key} /></PrivateRoute>} />
+          <Route path='manage/:id' key={location.key} element={<PrivateRoute><CreateActivity key={location.key} /></PrivateRoute>} />
+          <Route path='profiles/:username' element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
           <Route path='server-error' element={<ServerError />} />
           <Route path="*" element={<NotFound/>} />
         </Route>

@@ -13,7 +13,7 @@ const sleep = async (delay: number) => {
     })
 }
 
-axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 axios.interceptors.request.use(config => {
     const token = store.commonStore.token;
@@ -22,47 +22,50 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(async response => {
-        await sleep(1000)
-        const pagination = response.headers['pagination'];
-        if (pagination) {
-            response.data = new PaginatedResult(response.data, JSON.parse(pagination));
-            return response as AxiosResponse<PaginatedResult<any>>
-        }
-        return response;
-}, (error: AxiosError) => {
-    const {data, status, config} = error.response!;
-    switch (status) {
-        case 400:
-            if (typeof data === 'string') {
-                toast.error(data);
-            }
-            if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
-                history.push('not-found');
-            }
-            if (data.errors) {
-                const modelStateErrors = [];
-                for (const key in data.errors) {
-                    if (data.errors[key]) {
-                        modelStateErrors.push(data.errors[key])
-                    }
-                }
-                throw modelStateErrors.flat();
-            }
-            break;
-        case 401:
-            console.log(store.userStore.user)
-            toast.error('unauthorized');
-            break;
-        case 404: 
-            history.push("not-found");
-            break;
-        case 500:
-            store.commonStore.setServerError(data);
-            history.push('/server-error');
-            break;
+    if (process.env.NODE_ENV === 'development') await sleep(1000)
+
+    const pagination = response.headers['pagination'];
+
+    if (pagination) {
+        response.data = new PaginatedResult(response.data, JSON.parse(pagination));
+        return response as AxiosResponse<PaginatedResult<any>>
     }
-    return Promise.reject(error);
-})
+    return response;
+}, 
+    (error: AxiosError) => {
+        const {data, status, config} = error.response!;
+        switch (status) {
+            case 400:
+                if (typeof data === 'string') {
+                    toast.error(data);
+                }
+                if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
+                    history.push('not-found');
+                }
+                if (data.errors) {
+                    const modelStateErrors = [];
+                    for (const key in data.errors) {
+                        if (data.errors[key]) {
+                            modelStateErrors.push(data.errors[key])
+                        }
+                    }
+                    throw modelStateErrors.flat();
+                }
+                break;
+            case 401:
+                console.log(store.userStore.user)
+                toast.error('unauthorized');
+                break;
+            case 404: 
+                history.push("not-found");
+                break;
+            case 500:
+                store.commonStore.setServerError(data);
+                history.push('/server-error');
+                break;
+        }
+        return Promise.reject(error);
+    })
 
 const responseBody = <T> (response: AxiosResponse<T>) => response.data;
 
@@ -105,7 +108,7 @@ const Profiles = {
     listFollowings: (username: string, predicate: string) => 
         requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
     listActivities: (username: string, predicate: string) => 
-    requests.get<UserActivity[]>(`/profiles/${username}/activities?predicate=${predicate}`)
+        requests.get<UserActivity[]>(`/profiles/${username}/activities?predicate=${predicate}`)
 }
 
 const agent = {
