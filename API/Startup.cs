@@ -60,12 +60,12 @@ namespace API
             app.UseXfo(opt => opt.Deny());
             app.UseCsp(opt => opt
                 .BlockAllMixedContent()
-                .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com").UnsafeInline())
+                .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com"))
                 .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com"))
                 .FormActions(s => s.Self())
                 .FrameAncestors(s => s.Self())
                 .ImageSources(s => s.Self().CustomSources("https://res.cloudinary.com"))
-                .ScriptSources(s => s.Self().CustomSources("sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=").ToString())
+                .ScriptSources(s => s.Self().CustomSources("sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="))
             );   
             
             if (env.IsDevelopment())
